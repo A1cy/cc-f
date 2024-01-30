@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CC - MHG Admin Dashboard Template</title>
+  <link rel="stylesheet" type="text/css" href="/loader.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div id="loading-bg">
+      <div class="loading-logo">
+        <svg width="86" height="48" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65.2 65.2">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #231f20;
+                stroke-width: 0px;
+              }
+            </style>
+          </defs>
+          <path class="cls-1" d="M0,65.2h65.2V0H0v65.2ZM19.56,47.81h-8.69v6.52h6.52v-2.17h-4.35v-2.17h6.52v6.52h-10.87v-10.87h10.87v2.17ZM19.56,43.46h-2.17v-8.69h-2.17v8.69h-2.17v-8.69h-2.17v8.69h-2.17v-10.87h10.87v10.87ZM23.9,56.5h-2.17v-2.17h2.17v2.17ZM32.6,43.46h-2.17v-4.35h-6.52v4.35h-2.17v-10.87h2.17v4.35h6.52v-4.35h2.17v10.87Z"/>
+        </svg>
+        <!-- SVG Logo -->
+        
+      </div>
+      <div class=" loading">
+        <div class="effect-1 effects"></div>
+        <div class="effect-2 effects"></div>
+        <div class="effect-3 effects"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+  <script>
+    const loaderColor = localStorage.getItem('vuexy-initial-loader-bg') || '#FFFFFF'
+    const primaryColor = localStorage.getItem('vuexy-initial-loader-color') || '#7367F0'
+
+    if (loaderColor)
+      document.documentElement.style.setProperty('--initial-loader-bg', loaderColor)
+
+    if (primaryColor)
+      document.documentElement.style.setProperty('--initial-loader-color', primaryColor)
+    </script>
+  </body>
+</html>
