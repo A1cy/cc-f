@@ -6,6 +6,41 @@ export const useSheetsDataStore = defineStore('sheetsData', {
     sheetData: [],
   }),
   getters: {
+       // New Getter for Total Average Performance
+       totalAveragePerformance: (state) => {
+         let total = 0;
+         let count = 0;
+   
+         state.sheetData.slice(1).forEach(row => {
+           // Sum values from columns 8 to 15
+           for (let i = 7; i <= 14; i++) {
+             const value = i === 11 ? (row[i] === 'نعم' ? 10 : 0) : parseFloat(row[i]);
+             if (!isNaN(value)) {
+               total += value;
+               count += i === 11 ? 0 : 1; // Do not increment count for column 12
+             }
+           }
+         });
+   
+         // Calculate average if count is more than 0
+         return count > 0 ? Math.round((total / count) * 10) / 10 : 0;
+       },
+   yesNoPercentages: (state) => {
+      let yesCount = 0;
+      let noCount = 0;
+  
+      state.sheetData.slice(1).forEach(row => {
+        const answer = row[12]; // Assuming the answers are in the 13th column (index 12)
+        if (answer === 'نعم') yesCount++;
+        else if (answer === 'لا') noCount++;
+      });
+  
+      const total = yesCount + noCount;
+      return [
+        total ? Math.round((yesCount / total) * 100) : 0, // Yes percentage
+        total ? Math.round((noCount / total) * 100) : 0   // No percentage
+      ];
+    },
     uniqueEmployeeCount: (state) => {
       const uniqueIds = new Set();
       state.sheetData.slice(1).forEach(row => {

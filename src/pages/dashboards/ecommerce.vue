@@ -12,8 +12,8 @@ import EcommerceTotalProfitLineCharts from '@/views/dashboards/ecommerce/Ecommer
 import EcommerceTransactions from '@/views/dashboards/ecommerce/EcommerceTransactions.vue'
 import { useSheetsDataStore } from '@/@core/stores/sheetsData'
 import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/CardStatisticsTransactions.vue'
-import ApexChartExpenseRatio from '@/views/charts/apex-chart/ApexChartExpenseRatio.vue'
-
+import yesNoPercentage from '@/views/apps/ecommerce/yesNoPercentage.vue'
+import CcSupportTracker from '@/views/apps/ecommerce/CcSupportTracker.vue'
 
 
 const store = useSheetsDataStore()
@@ -25,7 +25,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
   <VRow class="match-height">
     <VCol
       cols="12"
-      md="12"
+      
     >
       <CardStatisticsTransactions />
     </VCol>
@@ -33,12 +33,15 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       cols="12"
       md="6"
     >
+      <CcSupportTracker />
+    </VCol>
+    <VCol>
       <VCard
-        title="Expense Ratio"
-        subtitle="Spending on various categories"
+        title="Case First time Completion Rate"
+        subtitle=""
       >
         <VCardText>
-          <ApexChartExpenseRatio />
+          <yesNoPercentage />
         </VCardText>
       </VCard>
     </VCol>
