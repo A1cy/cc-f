@@ -52,12 +52,7 @@ const statistics = computed(() => [
     icon: 'tabler-chart-pie-2',
     color: 'success',
   },
-  {
-    title: 'Employees',
-    stats: store.uniqueEmployeeCount,
-    icon: 'tabler-chart-pie-2',
-    color: 'primary',
-  },
+  
  
  
   {

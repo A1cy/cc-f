@@ -9,7 +9,7 @@ const store = useSheetsDataStore();
 const vuetifyTheme = useTheme();
 
 // Bind the calculated average performance to the series
-const series = computed(() => [store.totalAveragePerformance]);
+const series = computed(() => [store.totalAveragePerformance * 10]);
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors;
@@ -41,8 +41,9 @@ const chartOptions = computed(() => {
             color: `rgba(${hexToRgb(currentTheme['on-background'])}, ${variableTheme['high-emphasis-opacity']})`,
             fontSize: '38px',
             fontWeight: '400',
-            fontFamily: 'Public Sans',
-            formatter: (val) => `${val}%`,
+            fontFamily: 'Public Sans',           
+            formatter: (val) => `${val.toFixed(2)} / 10`, // This will format the value as a decimal out of 10
+
           },
         },
       },
@@ -57,11 +58,7 @@ const chartOptions = computed(() => {
         inverseColors: true,
         opacityFrom: 1,
         opacityTo: 0.6,
-        stops: [
-          30,
-          70,
-          100,
-        ],
+        stops: [30, 70, 100],
       },
     },
     stroke: { dashArray: 10 },
@@ -80,20 +77,21 @@ const chartOptions = computed(() => {
       options: { chart: { height: 340 } },
     }],
   }
-})
+});
+
 
 const supportTicket = [
   {
     avatarColor: 'primary',
-    avatarIcon: 'tabler-ticket',
-    title: 'New Tickets',
-    subtitle: '142',
+    avatarIcon: 'tabler-users',
+    title: 'Employees',
+    subtitle: store.uniqueEmployeeCount,
   },
   {
     avatarColor: 'info',
     avatarIcon: 'tabler-circle-check',
-    title: 'Open Tickets',
-    subtitle: '28',
+    title: 'Evaluations',
+    subtitle: store.evaluationsCount,
   },
   {
     avatarColor: 'warning',
@@ -125,10 +123,10 @@ const supportTicket = [
         >
           <div class="mb-6">
             <h4 class="text-h1">
-              164
+              {{store.evaluationsCount}}
             </h4>
             <p>
-              Total Tickets
+              Total Evaluations
             </p>
           </div>
 

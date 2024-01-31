@@ -6,55 +6,85 @@ export const useSheetsDataStore = defineStore('sheetsData', {
     sheetData: [],
   }),
   getters: {
-       // New Getter for Total Average Performance
-       totalAveragePerformance: (state) => {
-         let total = 0;
-         let count = 0;
    
-         state.sheetData.slice(1).forEach(row => {
-           // Sum values from columns 8 to 15
-           for (let i = 7; i <= 14; i++) {
-             const value = i === 11 ? (row[i] === 'نعم' ? 10 : 0) : parseFloat(row[i]);
-             if (!isNaN(value)) {
-               total += value;
-               count += i === 11 ? 0 : 1; // Do not increment count for column 12
-             }
-           }
-         });
-   
-         // Calculate average if count is more than 0
-         return count > 0 ? Math.round((total / count) * 10) / 10 : 0;
-       },
-   yesNoPercentages: (state) => {
-      let yesCount = 0;
-      let noCount = 0;
-  
+   totalAveragePerformance: (state) => {
+      let total = 0;
+      let entries = 0;
+    
       state.sheetData.slice(1).forEach(row => {
-        const answer = row[12]; // Assuming the answers are in the 13th column (index 12)
-        if (answer === 'نعم') yesCount++;
-        else if (answer === 'لا') noCount++;
-      });
-  
-      const total = yesCount + noCount;
-      return [
-        total ? Math.round((yesCount / total) * 100) : 0, // Yes percentage
-        total ? Math.round((noCount / total) * 100) : 0   // No percentage
-      ];
-    },
-    uniqueEmployeeCount: (state) => {
-      const uniqueIds = new Set();
-      state.sheetData.slice(1).forEach(row => {
-        const employeeId = row[7]?.trim(); // Correct column for employee ID
-        if (employeeId) {
-          uniqueIds.add(employeeId);
+        let rowTotal = 0;
+        let validEntries = 0;
+    
+        // Loop through the score columns, assuming they start from index 7 to 14
+        for (let i = 7; i <= 14; i++) {
+          let value = row[i];
+    
+          // Special case for the column that contains 'نعم' or 'لا'
+          if (i === 11) {
+            value = value === 'نعم' ? 10 : 0;
+          } else {
+            value = parseFloat(value);
+          }
+    
+          // Check if the value is a number and within the expected range
+          if (!isNaN(value) && value >= 0 && value <= 10) {
+            rowTotal += value;
+            validEntries++;
+          }
+        }
+    
+        // Calculate the average for the row if there are valid entries
+        if (validEntries > 0) {
+          let rowAverage = rowTotal / validEntries;
+          total += rowAverage;
+          entries++;
         }
       });
-      return uniqueIds.size;
+    
+      // Calculate the total average
+      let totalAverage = entries > 0 ? total / entries : 0;
+    
+      // Return the total average to two decimal places
+      return Number(totalAverage.toFixed(2));
     },
-    evaluationsCount: (state) => {
-      return state.sheetData.length > 0 ? state.sheetData.slice(1).length : 0;
+    
+    
+ 
+ 
+ 
+    yesNoPercentages: state => {
+      let yesCount = 0
+      let noCount = 0
+  
+      state.sheetData.slice(1).forEach(row => {
+        const answer = row[12] // Assuming the answers are in the 13th column (index 12)
+        if (answer === 'نعم') yesCount++
+        else if (answer === 'لا') noCount++
+      })
+  
+      const total = yesCount + noCount
+      
+      return [
+        total ? Math.round((yesCount / total) * 100) : 0, // Yes percentage
+        total ? Math.round((noCount / total) * 100) : 0,   // No percentage
+      ]
     },
-    averageColumnValues: (state) => {
+    uniqueEmployeeCount: state => {
+      const uniqueIds = new Set()
+
+      state.sheetData.slice(1).forEach(row => {
+        const employeeId = row[7]?.trim() // Correct column for employee ID
+        if (employeeId) {
+          uniqueIds.add(employeeId)
+        }
+      })
+      
+      return uniqueIds.size
+    },
+    evaluationsCount: state => {
+      return state.sheetData.length > 0 ? state.sheetData.slice(1).length : 0
+    },
+    averageColumnValues: state => {
       // Initialize sums and counts for each specified column
       let sums = {
         communicationClarity: 0, // Column 8
@@ -64,7 +94,7 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         interactionSpeed: 0,     // Column 13
         knowledgeCommitment: 0,  // Column 14
         productUnderstanding: 0, // Column 15
-      };
+      }
       let counts = {
         communicationClarity: 0,
         effectiveListening: 0,
@@ -73,43 +103,44 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         interactionSpeed: 0,
         knowledgeCommitment: 0,
         productUnderstanding: 0,
-      };
+      }
     
       // Start iterating from the first data row, skipping the header
       state.sheetData.slice(1).forEach(row => {
         // Update sums and counts for each column if the value is a number
         Object.keys(sums).forEach((key, index) => {
-          const columnIndex = [8, 9, 10, 11, 13, 14, 15][index];
-          const value = parseFloat(row[columnIndex]);
+          const columnIndex = [8, 9, 10, 11, 13, 14, 15][index]
+          const value = parseFloat(row[columnIndex])
           if (!isNaN(value)) {
-            sums[key] += value;
-            counts[key]++;
+            sums[key] += value
+            counts[key]++
           }
-        });
-      });
+        })
+      })
     
       // Calculate averages for each column
-      let averages = {};
+      let averages = {}
       Object.keys(sums).forEach(key => {
-        averages[key] = counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A";
-      });
+        averages[key] = counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A"
+      })
     
-      return averages;
+      return averages
     },
   },
   actions: {
     async fetchSheetData() {
-      const sheetId = '1R459QAkvFyTYXb7P_Hs-Hxc2LNeAoK6K2_xZs1-jyz4';
-      const apiKey = 'AIzaSyDhFVpHv6LWBbBlRCI_Lg0GeqMxvHWBiK8'; // Note: Be cautious with API keys
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`;
+      const sheetId = '1R459QAkvFyTYXb7P_Hs-Hxc2LNeAoK6K2_xZs1-jyz4'
+      const apiKey = 'AIzaSyDhFVpHv6LWBbBlRCI_Lg0GeqMxvHWBiK8' // Note: Be cautious with API keys
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`
 
       try {
-        const response = await fetch(url);
-        const data = await response.json();
-        this.sheetData = data.values;
+        const response = await fetch(url)
+        const data = await response.json()
+
+        this.sheetData = data.values
       } catch (error) {
-        console.error('Error fetching Google Sheets data:', error);
+        console.error('Error fetching Google Sheets data:', error)
       }
     },
   },
-});
+})
