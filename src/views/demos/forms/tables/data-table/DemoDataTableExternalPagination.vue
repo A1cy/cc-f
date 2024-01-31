@@ -1,14 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useSheetsDataStore } from '@/@core/stores/sheetsData'; // Adjust the path as needed
+import { useSheetsDataStore } from '@/@core/stores/sheetsData'; // Ensure this path matches your project structure
 
-// Define a reactive reference for the items that will be displayed in the table
 const items = ref([]);
 
-// Access the store
 const store = useSheetsDataStore();
 
-// Define headers for the VDataTable component
 const headers = [
   { text: 'Serial Number', align: 'start', value: 'serialNumber' },
   { text: 'Case Number', value: 'caseNumber' },
@@ -18,11 +15,20 @@ const headers = [
   { text: 'Employee Info', value: 'employeeInfo' },
   { text: 'Full Name', value: 'fullName' },
   { text: 'Employee Number', value: 'employeeNumber' },
- 
+  // Add headers for the assessment columns
+  { text: 'Communication Clarity', value: 'communicationClarity' },
+  { text: 'Effective Listening', value: 'effectiveListening' },
+  { text: 'Case Understanding', value: 'caseUnderstanding' },
+  { text: 'Response Ability', value: 'responseAbility' },
+  { text: 'Case Completion', value: 'caseCompletion' },
+  { text: 'Interaction Speed', value: 'interactionSpeed' },
+  { text: 'Knowledge and Commitment', value: 'knowledgeCommitment' },
+  { text: 'Product Understanding', value: 'productUnderstanding' },
+  { text: 'Notes', value: 'notes' },
 ];
 
 onMounted(async () => {
-  await store.fetchSheetData(); 
+  await store.fetchSheetData();
   
   items.value = store.sheetData.slice(1).map(row => ({
     serialNumber: row[0],
@@ -33,9 +39,19 @@ onMounted(async () => {
     employeeInfo: row[5],
     fullName: row[6],
     employeeNumber: row[7],
-   }));
+    communicationClarity: row[8],
+    effectiveListening: row[9],
+    caseUnderstanding: row[10],
+    responseAbility: row[11],
+    caseCompletion: row[12],
+    interactionSpeed: row[13],
+    knowledgeCommitment: row[14],
+    productUnderstanding: row[15],
+    notes: row[16] || '', // Optional, assuming notes might be empty
+  }));
 });
 </script>
+
 
 <template>
   <VRow>

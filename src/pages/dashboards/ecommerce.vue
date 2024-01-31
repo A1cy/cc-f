@@ -14,7 +14,7 @@ import { useSheetsDataStore } from '@/@core/stores/sheetsData'
 import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/CardStatisticsTransactions.vue'
 import yesNoPercentage from '@/views/apps/ecommerce/yesNoPercentage.vue'
 import CcSupportTracker from '@/views/apps/ecommerce/CcSupportTracker.vue'
-import DemoDataTableExternalPagination from '@/views/demos/forms/tables/data-table/DemoDataTableExternalPagination.vue'
+import datasheet from '@/views/apps/ecommerce/datasheet.vue'
 
 
 const store = useSheetsDataStore()
@@ -24,6 +24,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
 
 <template>
   <VRow class="match-height">
+    
     <VCol cols="12">
       <CardStatisticsTransactions />
     </VCol>
@@ -47,7 +48,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       cols="12"
      
     >
-      <DemoDataTableExternalPagination />
+      <datasheet />
     </VCol>
     <!-- Integration of Google Sheets Data -->
     <VCol
@@ -170,4 +171,5 @@ store.fetchSheetData() // Fetch data on component mount or when needed
 <style lang="scss">
 @use "@core/scss/template/libs/apex-chart.scss";
 </style>
+ 
  

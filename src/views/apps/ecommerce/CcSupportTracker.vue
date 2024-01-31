@@ -17,7 +17,7 @@ const chartOptions = computed(() => {
   const variableTheme = vuetifyTheme.current.value.variables;
   
   return {
-    labels: ['Average Performance'],
+    labels: ['AVG'],
     chart: { type: 'radialBar' },
     plotOptions: {
       radialBar: {
