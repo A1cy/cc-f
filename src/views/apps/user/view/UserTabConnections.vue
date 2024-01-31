@@ -53,14 +53,14 @@ const socialAccounts = ref([
     img: twitter,
     title: 'Twitter',
     link: 'https://twitter.com/pixinvents',
-    username: '@Pixinvent',
+    username: '@MHG',
     connected: true,
   },
   {
     img: linkedin,
     title: 'LinkedIn',
     link: 'https://www.linkedin.com/company/pixinvent',
-    username: '@Pixinvent',
+    username: '@MHG',
     connected: true,
   },
   {

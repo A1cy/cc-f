@@ -4,7 +4,8 @@ import VueApexCharts from 'vue3-apexcharts';
 import { useSheetsDataStore } from '@core/stores/sheetsData.js'; // Ensure this path is correct
 import { useTheme } from 'vuetify';
 import { hexToRgb } from '@layouts/utils';
-
+import { useI18n } from 'vue-i18n' // Import useI18n
+const { t } = useI18n()
 const store = useSheetsDataStore();
 const vuetifyTheme = useTheme();
 
@@ -84,29 +85,29 @@ const supportTicket = [
   {
     avatarColor: 'primary',
     avatarIcon: 'tabler-users',
-    title: 'Employees',
+    title: t('Employees'),
     subtitle: store.uniqueEmployeeCount,
   },
   {
     avatarColor: 'info',
     avatarIcon: 'tabler-circle-check',
-    title: 'Evaluations',
+    title: t('Evaluations'),
     subtitle: store.evaluationsCount,
   },
-  {
-    avatarColor: 'warning',
-    avatarIcon: 'tabler-clock',
-    title: 'Response Time',
-    subtitle: '1 Day',
-  },
+  // {
+  //   avatarColor: 'warning',
+  //   avatarIcon: 'tabler-clock',
+  //   title: 'Response Time',
+  //   subtitle: '1 Day',
+  // },
 ]
 </script>
 
 <template>
   <VCard
-    title="Support Tracker"
-    subtitle="Last 7 Days"
-  >
+    
+    :title="t('Support Tracker')"
+   >
     <template #append>
       <div class="mt-n4 me-n2">
         <MoreBtn :menu-list="[{ title: 'View More', value: 'View More' }, { title: 'Delete', value: 'Delete' }]" />
@@ -126,8 +127,8 @@ const supportTicket = [
               {{store.evaluationsCount}}
             </h4>
             <p>
-              Total Evaluations
-            </p>
+              {{ t('totalEvaluations') }}  
+             </p>
           </div>
 
           <VList class="card-list">

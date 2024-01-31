@@ -53,7 +53,7 @@ const socialAccounts = ref([
     logo: twitter,
     name: 'Twitter',
     links: {
-      username: '@Pixinvent',
+      username: '@MHG',
       link: 'https://twitter.com/Pixinvents',
     },
     connected: true,
@@ -62,7 +62,7 @@ const socialAccounts = ref([
     logo: intagram,
     name: 'Instagram',
     links: {
-      username: '@Pixinvent',
+      username: '@MHG',
       link: 'https://www.instagram.com/pixinvents/',
     },
     connected: true,

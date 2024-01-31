@@ -3020,7 +3020,7 @@ const checkbox = ref(false)
         <AppTextField
           v-model="company"
           label="Company"
-          placeholder="Pixinvent"
+          placeholder="MHG"
         />
       </VCol>
 
@@ -3132,7 +3132,7 @@ const checkbox = ref(false)
         <AppTextField
           v-model="company"
           label="Company"
-          placeholder="Pixinvent"
+          placeholder="MHG"
         />
       </VCol>
 

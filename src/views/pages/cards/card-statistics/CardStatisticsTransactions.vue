@@ -1,53 +1,54 @@
 <script setup>
 import { useSheetsDataStore } from '@/@core/stores/sheetsData'
- 
+import { useI18n } from 'vue-i18n' // Import useI18n
+const { t } = useI18n()
 const store = useSheetsDataStore()
 
 const statistics = computed(() => [
   {
-    title: 'Average Communication Clarity',
+    title: t('Average Communication Clarity'),
     stats: store.averageColumnValues.communicationClarity,
     icon: 'tabler-chart-pie-2',
     color: 'primary',
   },
  
   {
-    title: 'Average effective Listening  ',
+    title: t('Average effective Listening'),
     stats: store.averageColumnValues.effectiveListening,
     icon: 'tabler-chart-pie-2',
     color: 'success',
   },
  
   {
-    title: 'Average case Understanding  ',
+    title: t('Average case Understanding'),
     stats: store.averageColumnValues.caseUnderstanding,
     icon: 'tabler-chart-pie-2',
     color: 'error',
   },
  
   {
-    title: 'Average responseAbility  ',
+    title: t('Average responseAbility'),
     stats: store.averageColumnValues.responseAbility,
     icon: 'tabler-chart-pie-2',
     color: 'primary',
   },
  
   {
-    title: 'Average  interaction Speed  ',
+    title: t('Average interaction Speed'),
     stats: store.averageColumnValues.interactionSpeed,
     icon: 'tabler-chart-pie-2',
     color: 'success',
   },
  
   {
-    title: 'Average knowledge Commitment',
+    title: t('Average knowledge Commitment'),
     stats: store.averageColumnValues.knowledgeCommitment,
     icon: 'tabler-chart-pie-2',
     color: 'error',
   },
  
   {
-    title: 'Average product Understanding',
+    title: t('Average product Understanding'),
     stats: store.averageColumnValues.productUnderstanding,
     icon: 'tabler-chart-pie-2',
     color: 'success',
@@ -55,18 +56,13 @@ const statistics = computed(() => [
   
  
  
-  {
-    title: 'Evaluations',
-    stats: store.evaluationsCount,
-    icon: 'tabler-currency-dollar',
-    color: 'info'
-  } 
+ 
  ])
 </script>
 <template>
-  <VCard title="Status">
+  <VCard :title="t('Statistics')">
     <template #append>
-      <span class="text-sm text-disabled">Updated 1h ago</span>
+      <!-- <span class="text-sm text-disabled">Updated 1h ago</span> -->
     </template>
     <VCardText>
       <VRow>

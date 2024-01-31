@@ -11,7 +11,7 @@
         >
           <AppTextField
             label="Store name"
-            placeholder="Pixinvent"
+            placeholder="MHG"
           />
         </VCol>
         <VCol
@@ -80,7 +80,7 @@
         >
           <AppTextField
             label="Legal business name"
-            placeholder="Pixinvent"
+            placeholder="MHG"
           />
         </VCol>
 

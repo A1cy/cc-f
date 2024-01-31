@@ -14,21 +14,20 @@ import { useSheetsDataStore } from '@/@core/stores/sheetsData'
 import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/CardStatisticsTransactions.vue'
 import yesNoPercentage from '@/views/apps/ecommerce/yesNoPercentage.vue'
 import CcSupportTracker from '@/views/apps/ecommerce/CcSupportTracker.vue'
+import DemoDataTableExternalPagination from '@/views/demos/forms/tables/data-table/DemoDataTableExternalPagination.vue'
 
 
 const store = useSheetsDataStore()
-store.fetchSheetData() // Fetch data on component mount or when needed
 
+store.fetchSheetData() // Fetch data on component mount or when needed
 </script>
 
 <template>
   <VRow class="match-height">
-    <VCol
-      cols="12"
-      
-    >
+    <VCol cols="12">
       <CardStatisticsTransactions />
     </VCol>
+   
     <VCol
       cols="12"
       md="6"
@@ -37,54 +36,27 @@ store.fetchSheetData() // Fetch data on component mount or when needed
     </VCol>
     <VCol>
       <VCard
-        title="Case First time Completion Rate"
-        subtitle=""
+      
       >
-        <VCardText>
+        
           <yesNoPercentage />
-        </VCardText>
+         
       </VCard>
+    </VCol>
+    <VCol
+      cols="12"
+     
+    >
+      <DemoDataTableExternalPagination />
     </VCol>
     <!-- Integration of Google Sheets Data -->
     <VCol
       cols="12"
       md="12"
       lg="12"
-    >
-      <VCard>
-        <VCardTitle>Google Sheets Data</VCardTitle>
-        <VCardText>
-          <VSimpleTable height="250" fixed-header class="text-no-wrap">
-            <thead>
-              <tr>
-                <th
-                  v-for="(header, index) in store.sheetData[0]"
-                  :key="index" class="text-uppercase"
-                >
-                  {{ header }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(row, rowIndex) in store.sheetData.slice(1)"
-                :key="rowIndex"
-              >
-                <td
-                  v-for="(cell, cellIndex) in row"
-                  :key="cellIndex"
-                >
-                  {{ cell }}
-                </td>
-              </tr>
-            </tbody>
-          </VSimpleTable>
-        </VCardText>
-      </VCard>
-    </VCol>
+    />
 
-    <!-- 👉 Congratulation John -->
-    <VCol
+     <VCol
       cols="12"
       md="5"
       lg="4"

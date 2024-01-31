@@ -113,7 +113,7 @@ const addressTypes = [
               <AppTextField
                 v-model="billingAddress.companyName"
                 label="Company Name"
-                placeholder="Pixinvent"
+                placeholder="MHG"
               />
             </VCol>
 
@@ -159,7 +159,7 @@ const addressTypes = [
                 v-model="billingAddress.address"
                 rows="2"
                 label="Billing Address"
-                placeholder="1, Pixinvent Street, USA"
+                placeholder="1, MHG Street, USA"
               />
             </VCol>
 

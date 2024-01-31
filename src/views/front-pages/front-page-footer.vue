@@ -1,6 +1,4 @@
 <script setup>
-import appleImg from '@images/front-pages/landing-page/apple-icon.png'
-import googlePlayImg from '@images/front-pages/landing-page/google-play-icon.png'
 import footerDarkBg from '@images/front-pages/backgrounds/footer-bg-dark.png'
 import footerLightBg from '@images/front-pages/backgrounds/footer-bg-light.png'
 import facebookDark from '@images/front-pages/icons/facebook-dark.png'
@@ -11,6 +9,8 @@ import instagramDark from '@images/front-pages/icons/instagram-dark.png'
 import instagramLight from '@images/front-pages/icons/instagram-light.png'
 import twitterDark from '@images/front-pages/icons/twitter-dark.png'
 import twitterLight from '@images/front-pages/icons/twitter-light.png'
+import appleImg from '@images/front-pages/landing-page/apple-icon.png'
+import googlePlayImg from '@images/front-pages/landing-page/google-play-icon.png'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 
@@ -247,7 +247,7 @@ const demoList = [
               target="_blank"
               rel="noopener noreferrer"
               class="font-weight-bold ms-1 text-white"
-            >Pixinvent</a>,
+            >MHG</a>,
             Made With
             <VIcon
               icon="tabler-heart-filled"

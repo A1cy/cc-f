@@ -162,6 +162,9 @@
   "25": "25",
   "50": "50",
   "100": "100",
+  "Statistics": "Statistics",
+  "Average Communication Clarity": "Average Communication Clarity",
+  "caseFirstTimeCompletionRate": "Case First Time Completion Rate",
   "$vuetify": {
     "badge": "Badge",
     "noDataText": "No data available",

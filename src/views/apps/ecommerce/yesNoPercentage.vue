@@ -2,7 +2,8 @@
 import VueApexCharts from 'vue3-apexcharts';
 import { computed } from 'vue';
 import { useSheetsDataStore } from '@core/stores/sheetsData.js'; // Adjust the import path
-
+import { useI18n } from 'vue-i18n' // Import useI18n
+const { t } = useI18n()
 const store = useSheetsDataStore();
 
 // This computed property will automatically update when the store's state changes
@@ -47,7 +48,7 @@ const deliveryExceptionsChartConfig = {
         labels: {
           show: true,
           total: {
-            show: true,
+            show: false,
             label: 'Total Answers',
             formatter: (w) => {
               // Sum of all series values to show as total
@@ -67,7 +68,10 @@ const deliveryExceptionsChartConfig = {
 
 <template>
   <VCard>
-    <VCardItem title="">
+    <VCardItem
+  
+    :title="t('caseFirstTimeCompletionRate')"
+    >
       <template #append>
         <!-- Your MoreBtn component -->
       </template>

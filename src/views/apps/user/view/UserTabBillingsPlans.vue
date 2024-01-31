@@ -45,7 +45,7 @@ const creditCards = [
 ]
 
 const currentBillingAddress = {
-  companyName: 'Pixinvent',
+  companyName: 'MHG',
   billingEmail: 'gertrude@gmail.com',
   taxID: 'TAX-875623',
   vatNumber: 'SDF754K77',

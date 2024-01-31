@@ -6,7 +6,7 @@ const accountData = {
   firstName: 'john',
   lastName: 'Doe',
   email: 'johnDoe@example.com',
-  org: 'Pixinvent',
+  org: 'MHG',
   phone: '+1 (917) 543-9876',
   address: '123 Main St, New York, NY 10001',
   state: 'New York',

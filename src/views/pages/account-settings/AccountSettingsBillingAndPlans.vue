@@ -391,7 +391,7 @@ const resetPaymentForm = () => {
               >
                 <AppTextField
                   label="Company Name"
-                  placeholder="Pixinvent"
+                  placeholder="MHG"
                 />
               </VCol>
 

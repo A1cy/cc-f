@@ -7,45 +7,45 @@ export const useSheetsDataStore = defineStore('sheetsData', {
   }),
   getters: {
    
-   totalAveragePerformance: (state) => {
-      let total = 0;
-      let entries = 0;
+    totalAveragePerformance: state => {
+      let total = 0
+      let entries = 0
     
       state.sheetData.slice(1).forEach(row => {
-        let rowTotal = 0;
-        let validEntries = 0;
+        let rowTotal = 0
+        let validEntries = 0
     
         // Loop through the score columns, assuming they start from index 7 to 14
         for (let i = 7; i <= 14; i++) {
-          let value = row[i];
+          let value = row[i]
     
           // Special case for the column that contains 'نعم' or 'لا'
           if (i === 11) {
-            value = value === 'نعم' ? 10 : 0;
+            value = value === 'نعم' ? 10 : 0
           } else {
-            value = parseFloat(value);
+            value = parseFloat(value)
           }
     
           // Check if the value is a number and within the expected range
           if (!isNaN(value) && value >= 0 && value <= 10) {
-            rowTotal += value;
-            validEntries++;
+            rowTotal += value
+            validEntries++
           }
         }
     
         // Calculate the average for the row if there are valid entries
         if (validEntries > 0) {
-          let rowAverage = rowTotal / validEntries;
-          total += rowAverage;
-          entries++;
+          let rowAverage = rowTotal / validEntries
+          total += rowAverage
+          entries++
         }
-      });
+      })
     
       // Calculate the total average
-      let totalAverage = entries > 0 ? total / entries : 0;
+      let totalAverage = entries > 0 ? total / entries : 0
     
       // Return the total average to two decimal places
-      return Number(totalAverage.toFixed(2));
+      return Number(totalAverage.toFixed(2))
     },
     
     
@@ -132,15 +132,34 @@ export const useSheetsDataStore = defineStore('sheetsData', {
       const sheetId = '1R459QAkvFyTYXb7P_Hs-Hxc2LNeAoK6K2_xZs1-jyz4'
       const apiKey = 'AIzaSyDhFVpHv6LWBbBlRCI_Lg0GeqMxvHWBiK8' // Note: Be cautious with API keys
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`
-
       try {
-        const response = await fetch(url)
-        const data = await response.json()
-
-        this.sheetData = data.values
-      } catch (error) {
-        console.error('Error fetching Google Sheets data:', error)
-      }
+         const response = await fetch(url);
+         if (!response.ok) throw new Error('Network response was not ok');
+         const data = await response.json();
+         this.sheetData = data.values;
+       } catch (error) {
+         console.error('Error fetching Google Sheets data:', error);
+       }
     },
   },
 })
+
+
+
+// serialNumber: row[0],
+// caseNumber: row[1],
+// contactType: row[2],
+// caseDate: row[3],
+// evaluationDate: row[4],
+// employeeInfo: row[5],
+// fullName: row[6],
+// employeeNumber: row[7],
+// communicationClarity: parseFloat(row[8]),
+// effectiveListening: parseFloat(row[9]),
+// caseUnderstanding: parseFloat(row[10]),
+// responseAbility: row[11] === 'نعم' ? 10 : (row[11] === 'لا' ? 0 : parseFloat(row[11])),
+// caseCompletion: row[12], // Assume 'Yes' or 'No' values are in this column
+// interactionSpeed: parseFloat(row[13]),
+// knowledgeCommitment: parseFloat(row[14]),
+// productUnderstanding: parseFloat(row[15]),
+// notes: row[16],
