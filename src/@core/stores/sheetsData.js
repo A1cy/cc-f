@@ -47,11 +47,6 @@ export const useSheetsDataStore = defineStore('sheetsData', {
       // Return the total average to two decimal places
       return Number(totalAverage.toFixed(2))
     },
-    
-    
- 
- 
- 
     yesNoPercentages: state => {
       let yesCount = 0
       let noCount = 0

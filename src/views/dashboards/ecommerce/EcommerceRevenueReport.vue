@@ -7,7 +7,7 @@ const vuetifyTheme = useTheme()
 const series = {
   bar: [
     {
-      name: 'Earning',
+      name: 'This week',
       data: [
         270,
         210,
@@ -21,7 +21,7 @@ const series = {
       ],
     },
     {
-      name: 'Expense',
+      name: 'last week',
       data: [
         -140,
         -160,
@@ -308,11 +308,10 @@ const chartOptions = computed(() => {
 
           <div class="d-flex flex-column mt-8">
             <h3 class="font-weight-medium text-h3">
-              $25,825
-            </h3>
+8/10            </h3>
             <p>
-              <span class="text-high-emphasis font-weight-medium me-1">Budget:</span>
-              <span>56,800</span>
+              <span class="text-high-emphasis font-weight-medium me-1">Evaluations :</span>
+              <span>142</span>
             </p>
           </div>
 
@@ -323,7 +322,7 @@ const chartOptions = computed(() => {
           />
 
           <VBtn class="mt-4">
-            Increase Budget
+            Send Report
           </VBtn>
         </VCardText>
       </VCol>
