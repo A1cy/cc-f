@@ -12,6 +12,7 @@ import EcommerceTotalProfitLineCharts from '@/views/dashboards/ecommerce/Ecommer
 import EcommerceTransactions from '@/views/dashboards/ecommerce/EcommerceTransactions.vue'
 import { useSheetsDataStore } from '@/@core/stores/sheetsData'
 import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/CardStatisticsTransactions.vue'
+import ApexChartExpenseRatio from '@/views/charts/apex-chart/ApexChartExpenseRatio.vue'
 
 
 
@@ -27,6 +28,19 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       md="12"
     >
       <CardStatisticsTransactions />
+    </VCol>
+    <VCol
+      cols="12"
+      md="6"
+    >
+      <VCard
+        title="Expense Ratio"
+        subtitle="Spending on various categories"
+      >
+        <VCardText>
+          <ApexChartExpenseRatio />
+        </VCardText>
+      </VCard>
     </VCol>
     <!-- Integration of Google Sheets Data -->
     <VCol
