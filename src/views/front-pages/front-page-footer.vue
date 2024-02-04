@@ -21,50 +21,50 @@ const instagram = useGenerateImageVariant(instagramLight, instagramDark)
 const footerBg = useGenerateImageVariant(footerLightBg, footerDarkBg)
 
 const pagesList = [
-  {
-    name: 'Pricing',
-    to: { name: 'front-pages-pricing' },
-  },
-  {
-    name: 'Payment',
-    to: { name: 'front-pages-payment' },
-    isNew: true,
-  },
-  {
-    name: 'Checkout',
-    to: { name: 'front-pages-checkout' },
-  },
-  {
-    name: 'Help Center',
-    to: { name: 'front-pages-help-center' },
-  },
-  {
-    name: 'Login/Register',
-    to: { name: 'pages-authentication-login-v2' },
-  },
+  // {
+  //   name: 'Pricing',
+  //   to: { name: 'front-pages-pricing' },
+  // },
+  // {
+  //   name: 'Payment',
+  //   to: { name: 'front-pages-payment' },
+  //   isNew: true,
+  // },
+  // {
+  //   name: 'Checkout',
+  //   to: { name: 'front-pages-checkout' },
+  // },
+  // {
+  //   name: 'Help Center',
+  //   to: { name: 'front-pages-help-center' },
+  // },
+  // {
+  //   name: 'Login/Register',
+  //   to: { name: 'pages-authentication-login-v2' },
+  // },
 ]
 
 const demoList = [
-  {
-    title: 'Vertical Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/dashboards/analytics',
-  },
-  {
-    title: 'Horizontal Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-5/dashboards/analytics',
-  },
-  {
-    title: 'Bordered Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-2/dashboards/analytics',
-  },
-  {
-    title: 'Semi Dark Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-3/dashboards/analytics',
-  },
-  {
-    title: 'Dark Layout',
-    to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-4/dashboards/analytics',
-  },
+  // {
+  //   title: 'Vertical Layout',
+  //   to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/dashboards/analytics',
+  // },
+  // {
+  //   title: 'Horizontal Layout',
+  //   to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-5/dashboards/analytics',
+  // },
+  // {
+  //   title: 'Bordered Layout',
+  //   to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-2/dashboards/analytics',
+  // },
+  // {
+  //   title: 'Semi Dark Layout',
+  //   to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-3/dashboards/analytics',
+  // },
+  // {
+  //   title: 'Dark Layout',
+  //   to: 'https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-4/dashboards/analytics',
+  // },
 ]
 </script>
 
@@ -95,7 +95,7 @@ const demoList = [
                 class="mb-8"
                 :class="$vuetify.theme.current.dark ? 'text-body-1' : 'text-white-variant'"
               >
-                Most Powerful & Comprehensive 🤩 Vuejs Admin Template with Elegant Material Design & Unique Layouts.
+                Most Powerful & Comprehensive 🤩 cc Admin Template with Elegant Material Design & Unique Layouts.
               </div>
               <VForm class="subscribe-form d-flex align-center">
                 <AppTextField

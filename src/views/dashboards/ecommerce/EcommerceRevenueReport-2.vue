@@ -1,51 +1,75 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useSheetsDataStore } from '@/@core/stores/sheetsData'; // Ensure this path matches your project structure
-import { useTheme } from 'vuetify';
-import { hexToRgb } from '@layouts/utils';
-import VueApexCharts from 'vue3-apexcharts';
+import { useTheme } from 'vuetify'
+import { hexToRgb } from '@layouts/utils'
 
-const store = useSheetsDataStore();
-const vuetifyTheme = useTheme();
+const vuetifyTheme = useTheme()
 
-// Placeholder for dynamically generated series data
-const dynamicSeries = ref({
-  bar: [],
-  line: []
-});
-
-// Placeholder for dynamically generated categories (employee names)
-const categories = ref([]);
-
-onMounted(async () => {
-  await store.fetchSheetData(); // Fetch employee data
-  console.log("Processed Data:", dynamicSeries.value, categories.value);
-  console.log("Employee Weekly Performance:", store.employeeWeeklyPerformance);
-
-   categories.value = store.employeeWeeklyPerformance.map(emp => emp.fullName); // Assuming unique names
-
-  dynamicSeries.value.bar = [
+const series = {
+  bar: [
     {
       name: 'This week',
-      data: store.employeeWeeklyPerformance.map(emp => emp.thisWeekPerformance), // Placeholder for actual data
+      data: [
+        9,
+        7,
+        8,
+        2,
+        2,
+        2,
+        5,
+        7,
+        5,
+      ],
     },
     {
-      name: 'Last week',
-      data: store.employeeWeeklyPerformance.map(emp => emp.lastWeekPerformance), // Placeholder for actual data
-    }
-  ];
-
-  dynamicSeries.value.line = [
+      name: 'last week',
+      data: [
+        4,
+        6,
+        8,
+        5,
+        10,
+        6,
+        8,
+        10,
+        8,
+      ],
+    },
+  ],
+  line: [
     {
       name: 'Last Month',
-      data: store.employeeMonthlyPerformance.map(emp => emp.lastMonthPerformance), // Placeholder for actual data
+      data: [
+        20,
+        10,
+        30,
+        16,
+        24,
+        5,
+        40,
+        23,
+        28,
+        5,
+        30,
+      ],
     },
     {
       name: 'This Month',
-      data: store.employeeMonthlyPerformance.map(emp => emp.thisMonthPerformance), // Placeholder for actual data
-    }
-  ];
-});
+      data: [
+        50,
+        40,
+        60,
+        46,
+        54,
+        35,
+        70,
+        53,
+        58,
+        35,
+        60,
+      ],
+    },
+  ],
+}
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors
@@ -106,9 +130,17 @@ const chartOptions = computed(() => {
         },
       },
       xaxis: {
-
-        categories: categories.value,
-
+        categories: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+        ],
         labels: {
           style: {
             fontSize: '13px',
@@ -233,12 +265,12 @@ const chartOptions = computed(() => {
       >
         <VCardText class="pe-2">
           <h5 class="text-h5 mb-6">
-             Employee Performance (This Week vs Last Week)
+            Revenue Report
           </h5>
 
           <VueApexCharts
             :options="chartOptions.bar"
-            :series="dynamicSeries.bar"
+            :series="series.bar"
             height="312"
           />
         </VCardText>
@@ -284,8 +316,8 @@ const chartOptions = computed(() => {
           </div>
 
           <VueApexCharts
-          :options="chartOptions.line"
-            :series="dynamicSeries.line"
+            :options="chartOptions.line"
+            :series="series.line"
             height="100"
           />
 
