@@ -139,34 +139,7 @@ export const useSheetsDataStore = defineStore('sheetsData', {
     
       return averages
     },
-    _parsedSheetData: (state) => {
-      return state.sheetData.slice(1).map(row => ({
-        evaluationDate: row[4],
-        fullName: row[6]?.trim(),
-        employeeId: row[7]?.trim(),
-        performanceScores: [8, 9, 10, 13, 14, 15].map(i => parseFloat(row[i])).filter(v => !isNaN(v) && v >= 0 && v <= 10),
-        responseAbility: row[11] === 'نعم' ? 10 : row[11] === 'لا' ? 0 : parseFloat(row[11]),
-        caseCompletion: row[12],
-      })).filter(row => row.employeeId && row.fullName);
-    },
-    employeeWeeklyPerformance: (state, getters) => {
-      const performanceByEmployeeAndWeek = {};
-      getters._parsedSheetData.forEach(({ employeeId, fullName, evaluationDate, performanceScores }) => {
-        const date = startOfWeek(parseISO(evaluationDate), { weekStartsOn: 1 });
-        const weekKey = format(date, 'yyyy-ww');
-        const key = `${fullName}-${employeeId}-${weekKey}`;
-
-        if (!performanceByEmployeeAndWeek[key]) performanceByEmployeeAndWeek[key] = [];
-        const averagePerformance = performanceScores.length ? performanceScores.reduce((sum, score) => sum + score, 0) / performanceScores.length : 0;
-        performanceByEmployeeAndWeek[key].push(averagePerformance);
-      });
-
-      return Object.entries(performanceByEmployeeAndWeek).map(([key, performances]) => {
-        const [fullName, employeeId, week] = key.split('-');
-        const averagePerformance = performances.reduce((a, b) => a + b, 0) / performances.length;
-        return { fullName, employeeId, week, averagePerformance: Number(averagePerformance.toFixed(2)) };
-      });
-    }
+    
   }
 });
 
