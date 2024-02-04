@@ -34,7 +34,7 @@
         <VCol cols="12" md="6">
             <CcSupportTracker />
         </VCol>
-        <VCol>
+        <VCol cols="12" md="6">
             <VCard>
 
                 <yesNoPercentage />
