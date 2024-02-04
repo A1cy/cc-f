@@ -173,6 +173,9 @@
   "Average knowledge Commitment": "Average knowledge Commitment",
   "Average product Understanding": "Average product Understanding",
   "caseFirstTimeCompletionRate": "Case First Time Completion Rate",
+  "Employees": "CC Employees",
+  "Evaluations": "Evaluations",
+
   "$vuetify": {
     "badge": "Badge",
     "noDataText": "No data available",
