@@ -8,8 +8,8 @@ export const useSheetsDataStore = defineStore('sheetsData', {
   }),
   actions: {
     async fetchSheetData() {
-      const sheetId = '1R459QAkvFyTYXb7P_Hs-Hxc2LNeAoK6K2_xZs1-jyz4'
-      const apiKey = 'AIzaSyDhFVpHv6LWBbBlRCI_Lg0GeqMxvHWBiK8'
+      const sheetId = '1-VFSlgITO1mnX-Z1xn1rZ9wKmemGTULSiHD6Byl3WTU'
+      const apiKey = 'AIzaSyCgrfPXVtcdoKiN1-nqOl9JXyAv_yExzy0'
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`
       try {
         const response = await fetch(url)
@@ -76,7 +76,7 @@ export const useSheetsDataStore = defineStore('sheetsData', {
       })
   
       const total = yesCount + noCount
-      
+
       return [
         total ? Math.round((yesCount / total) * 100) : 0, // Yes percentage
         total ? Math.round((noCount / total) * 100) : 0,   // No percentage
