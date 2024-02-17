@@ -125,7 +125,7 @@ const resolveStatus = status => {
 const {
   data: ordersData,
   execute: fetchOrders,
-} = await useApi(createUrl('/apps/ecommerce/orders', {
+} = await useApi(createUrl('/apps/ccevaluation/orders', {
   query: {
     q: searchQuery,
     page,
@@ -139,7 +139,7 @@ const orders = computed(() => ordersData.value.orders)
 const totalOrder = computed(() => ordersData.value.total)
 
 const deleteOrder = async id => {
-  await $api(`/apps/ecommerce/orders/${ id }`, { method: 'DELETE' })
+  await $api(`/apps/ccevaluation/orders/${ id }`, { method: 'DELETE' })
   fetchOrders()
 }
 </script>
@@ -247,7 +247,7 @@ const deleteOrder = async id => {
         <!-- Order ID -->
         <template #item.order="{ item }">
           <RouterLink
-            :to="{ name: 'apps-ecommerce-order-details-id', params: { id: item.order } }"
+            :to="{ name: 'apps-ccevaluation-order-details-id', params: { id: item.order } }"
             class="font-weight-medium"
           >
             #{{ item.order }}
@@ -344,7 +344,7 @@ const deleteOrder = async id => {
               <VList>
                 <VListItem
                   value="view"
-                  :to="{ name: 'apps-ecommerce-order-details-id', params: { id: item.order } }"
+                  :to="{ name: 'apps-ccevaluation-order-details-id', params: { id: item.order } }"
                 >
                   View
                 </VListItem>

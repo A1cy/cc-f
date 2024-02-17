@@ -12,7 +12,7 @@ export const redirects = [
       const userData = useCookie('userData')
       const userRole = userData.value?.role
       if (userRole === 'admin')
-        return { name: 'dashboards-ecommerce' }
+        return { name: 'dashboards-ccevaluation' }
       if (userRole === 'client')
         return { name: 'access-control' }
       
@@ -64,8 +64,8 @@ export const routes = [
     component: () => import('@/pages/apps/academy/dashboard.vue'),
   },
   {
-    path: '/apps/ecommerce/dashboard',
-    name: 'apps-ecommerce-dashboard',
-    component: () => import('@/pages/dashboards/ecommerce.vue'),
+    path: '/apps/ccevaluation/dashboard',
+    name: 'apps-ccevaluation-dashboard',
+    component: () => import('@/pages/dashboards/ccevaluation.vue'),
   },
 ]

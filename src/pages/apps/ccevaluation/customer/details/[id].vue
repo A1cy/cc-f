@@ -1,12 +1,12 @@
 <script setup>
-import ECommerceAddCustomerDrawer from '@/views/apps/ecommerce/ECommerceAddCustomerDrawer.vue'
-import CustomerBioPanel from '@/views/apps/ecommerce/customer/view/CustomerBioPanel.vue'
-import CustomerTabAddressAndBilling from '@/views/apps/ecommerce/customer/view/CustomerTabAddressAndBilling.vue'
-import CustomerTabNotification from '@/views/apps/ecommerce/customer/view/CustomerTabNotification.vue'
-import CustomerTabOverview from '@/views/apps/ecommerce/customer/view/CustomerTabOverview.vue'
-import CustomerTabSecurity from '@/views/apps/ecommerce/customer/view/CustomerTabSecurity.vue'
+import ECommerceAddCustomerDrawer from '@/views/apps/ccevaluation/ECommerceAddCustomerDrawer.vue'
+import CustomerBioPanel from '@/views/apps/ccevaluation/customer/view/CustomerBioPanel.vue'
+import CustomerTabAddressAndBilling from '@/views/apps/ccevaluation/customer/view/CustomerTabAddressAndBilling.vue'
+import CustomerTabNotification from '@/views/apps/ccevaluation/customer/view/CustomerTabNotification.vue'
+import CustomerTabOverview from '@/views/apps/ccevaluation/customer/view/CustomerTabOverview.vue'
+import CustomerTabSecurity from '@/views/apps/ccevaluation/customer/view/CustomerTabSecurity.vue'
 
-const route = useRoute('apps-ecommerce-customer-details-id')
+const route = useRoute('apps-ccevaluation-customer-details-id')
 const customerData = ref()
 const userTab = ref(null)
 
@@ -17,7 +17,7 @@ const tabs = [
   { title: 'Notifications' },
 ]
 
-const { data, error } = await useApi(`/apps/ecommerce/customers/${ route.params.id }`)
+const { data, error } = await useApi(`/apps/ccevaluation/customers/${ route.params.id }`)
 if (error.value)
   console.log(error.value)
 else if (data.value)

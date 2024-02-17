@@ -13,7 +13,7 @@ export default [
       // },
       {
         title: 'Ecommerce',
-        to: 'dashboards-ecommerce',
+        to: 'dashboards-ccevaluation',
        },
       // {
       //   title: 'Academy',

@@ -42,9 +42,11 @@ const chartOptions = computed(() => {
             color: `rgba(${hexToRgb(currentTheme['on-background'])}, ${variableTheme['high-emphasis-opacity']})`,
             fontSize: '38px',
             fontWeight: '400',
-            fontFamily: 'Public Sans',           
-            formatter: (val) => `${val.toFixed(2)} / 10`, // This will format the value as a decimal out of 10
+            fontFamily: 'Public Sans',  
+                    
+            
 
+            formatter: (val) => `${(val / 10).toFixed(2)} /10`, // This will format the value as a decimal out of 10
           },
         },
       },

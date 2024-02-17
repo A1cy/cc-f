@@ -1,10 +1,10 @@
 <script setup>
-import SettingsCheckout from '@/views/apps/ecommerce/settings/SettingsCheckout.vue'
-import SettingsLocations from '@/views/apps/ecommerce/settings/SettingsLocations.vue'
-import SettingsNotifications from '@/views/apps/ecommerce/settings/SettingsNotifications.vue'
-import SettingsPayment from '@/views/apps/ecommerce/settings/SettingsPayment.vue'
-import SettingsShippingAndDelivery from '@/views/apps/ecommerce/settings/SettingsShippingAndDelivery.vue'
-import SettingsStoreDetails from '@/views/apps/ecommerce/settings/SettingsStoreDetails.vue'
+import SettingsCheckout from '@/views/apps/ccevaluation/settings/SettingsCheckout.vue'
+import SettingsLocations from '@/views/apps/ccevaluation/settings/SettingsLocations.vue'
+import SettingsNotifications from '@/views/apps/ccevaluation/settings/SettingsNotifications.vue'
+import SettingsPayment from '@/views/apps/ccevaluation/settings/SettingsPayment.vue'
+import SettingsShippingAndDelivery from '@/views/apps/ccevaluation/settings/SettingsShippingAndDelivery.vue'
+import SettingsStoreDetails from '@/views/apps/ccevaluation/settings/SettingsStoreDetails.vue'
 
 const tabsData = [
   {

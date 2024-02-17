@@ -1,3 +1,6 @@
+// q: the data here is not updated from the google sheet
+
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useSheetsDataStore } from '@/@core/stores/sheetsData'; // Ensure this path matches your project structure
@@ -6,6 +9,7 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 const items = ref([]);
 const store = useSheetsDataStore();
 
+// Headers remain the same as you are just mapping the data differently
 const headers = [
   { text: 'Serial Number', align: 'start', sortable: false, value: 'serialNumber' },
   { text: 'Case Number', value: 'caseNumber', sortable: false },
@@ -31,22 +35,25 @@ onMounted(async () => {
 
   items.value = store.sheetData.slice(1).map(row => ({
     serialNumber: row[0],
-    caseNumber: row[1],
-    contactType: row[2],
-    caseDate: row[3],
-    evaluationDate: row[4],
-    employeeInfo: row[5],
-    fullName: row[6],
-    employeeNumber: row[7],
-    communicationClarity: row[8],
-    effectiveListening: row[9],
-    caseUnderstanding: row[10],
-    responseAbility: row[11],
-    // caseCompletion: row[12] === 'نعم' ? 'Yes' : 'No', // Assuming 'نعم' means Yes and translating for clarity
-    interactionSpeed: row[13],
-    knowledgeCommitment: row[14],
-    productUnderstanding: row[15],
-    notes: row[16] || '',  
+    caseLink: row[1], // Added caseLink mapping if needed
+    caseNumber: row[2],
+    contactType: row[3],
+    caseDate: row[4],
+    evaluationDate: row[5],
+    employeeInfo: row[6],
+    fullName: row[7],
+    employeeNumber: row[8],
+    communicationClarity: row[9],
+    effectiveListening: row[10],
+    caseUnderstanding: row[11],
+    responseAbility: row[12],
+    // caseCompletion: row[13], // Update this if you need to translate 'نعم'/'لا' to 'Yes'/'No'
+    interactionSpeed: row[14],
+    knowledgeCommitment: row[15],
+    productUnderstanding: row[16],
+    feedback: row[17], // Added feedback mapping if needed
+    correction: row[18], // Added correction mapping if needed
+    notes: row[17] || '', // Adjust this based on where notes are now located or if another field is more appropriate
   }));
 });
 </script>

@@ -83,7 +83,7 @@ const updateOptions = options => {
   orderBy.value = options.sortBy[0]?.order
 }
 
-const { data: referralData } = await useApi(createUrl('/apps/ecommerce/referrals', {
+const { data: referralData } = await useApi(createUrl('/apps/ccevaluation/referrals', {
   query: {
     page,
     itemsPerPage,
@@ -303,7 +303,7 @@ const resolveStatus = status => {
                 />
                 <div>
                   <div class="font-weight-medium text-high-emphasis">
-                    <RouterLink :to="{ name: 'apps-ecommerce-customer-details-id', params: { id: 478426 } }">
+                    <RouterLink :to="{ name: 'apps-ccevaluation-customer-details-id', params: { id: 478426 } }">
                       {{ item.user }}
                     </RouterLink>
                   </div>

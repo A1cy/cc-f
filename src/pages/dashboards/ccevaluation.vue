@@ -1,22 +1,22 @@
 <script setup>
-// import EcommerceCongratulationsJohn from '@/views/dashboards/ecommerce/EcommerceCongratulationsJohn.vue'
-// import EcommerceEarningReports from '@/views/dashboards/ecommerce/EcommerceEarningReports.vue'
-// import EcommerceExpensesRadialBarCharts from '@/views/dashboards/ecommerce/EcommerceExpensesRadialBarCharts.vue'
-// import EcommerceGeneratedLeads from '@/views/dashboards/ecommerce/EcommerceGeneratedLeads.vue'
-// import EcommerceInvoiceTable from '@/views/dashboards/ecommerce/EcommerceInvoiceTable.vue'
-// import EcommerceOrder from '@/views/dashboards/ecommerce/EcommerceOrder.vue'
-// import EcommercePopularProducts from '@/views/dashboards/ecommerce/EcommercePopularProducts.vue'
-// import EcommerceRevenueReport from '@/views/dashboards/ecommerce/EcommerceRevenueReport.vue'
-// import EcommerceStatistics from '@/views/dashboards/ecommerce/EcommerceStatistics.vue'
-// import EcommerceTotalProfitLineCharts from '@/views/dashboards/ecommerce/EcommerceTotalProfitLineCharts.vue'
-// import EcommerceTransactions from '@/views/dashboards/ecommerce/EcommerceTransactions.vue'
+// import EcommerceCongratulationsJohn from '@/views/dashboards/ccevaluation/EcommerceCongratulationsJohn.vue'
+// import EcommerceEarningReports from '@/views/dashboards/ccevaluation/EcommerceEarningReports.vue'
+// import EcommerceExpensesRadialBarCharts from '@/views/dashboards/ccevaluation/EcommerceExpensesRadialBarCharts.vue'
+// import EcommerceGeneratedLeads from '@/views/dashboards/ccevaluation/EcommerceGeneratedLeads.vue'
+// import EcommerceInvoiceTable from '@/views/dashboards/ccevaluation/EcommerceInvoiceTable.vue'
+// import EcommerceOrder from '@/views/dashboards/ccevaluation/EcommerceOrder.vue'
+// import EcommercePopularProducts from '@/views/dashboards/ccevaluation/EcommercePopularProducts.vue'
+// import EcommerceRevenueReport from '@/views/dashboards/ccevaluation/EcommerceRevenueReport.vue'
+// import EcommerceStatistics from '@/views/dashboards/ccevaluation/EcommerceStatistics.vue'
+// import EcommerceTotalProfitLineCharts from '@/views/dashboards/ccevaluation/EcommerceTotalProfitLineCharts.vue'
+// import EcommerceTransactions from '@/views/dashboards/ccevaluation/EcommerceTransactions.vue'
 import {
   useSheetsDataStore,
 } from '@/@core/stores/sheetsData'
 import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/CardStatisticsTransactions.vue'
-import yesNoPercentage from '@/views/apps/ecommerce/yesNoPercentage.vue'
-import CcSupportTracker from '@/views/apps/ecommerce/CcSupportTracker.vue'
-import datasheet from '@/views/apps/ecommerce/datasheet.vue'
+import yesNoPercentage from '@/views/apps/ccevaluation/yesNoPercentage.vue'
+import CcSupportTracker from '@/views/apps/ccevaluation/CcSupportTracker.vue'
+import datasheet from '@/views/apps/ccevaluation/datasheet.vue'
 
 
 const store = useSheetsDataStore()

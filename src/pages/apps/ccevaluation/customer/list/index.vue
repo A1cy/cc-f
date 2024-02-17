@@ -1,7 +1,7 @@
 <script setup>
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@api-utils/paginationMeta'
-import ECommerceAddCustomerDrawer from '@/views/apps/ecommerce/ECommerceAddCustomerDrawer.vue'
+import ECommerceAddCustomerDrawer from '@/views/apps/ccevaluation/ECommerceAddCustomerDrawer.vue'
 
 const searchQuery = ref('')
 const isAddCustomerDrawerOpen = ref(false)
@@ -42,7 +42,7 @@ const updateOptions = options => {
   orderBy.value = options.sortBy[0]?.order
 }
 
-const { data: customerData } = await useApi(createUrl('/apps/ecommerce/customers', {
+const { data: customerData } = await useApi(createUrl('/apps/ccevaluation/customers', {
   query: {
     q: searchQuery,
     itemsPerPage,
@@ -110,7 +110,7 @@ const totalCustomers = computed(() => customerData.value.total)
             />
             <div class="d-flex flex-column">
               <RouterLink
-                :to="{ name: 'apps-ecommerce-customer-details-id', params: { id: item.customerId } }"
+                :to="{ name: 'apps-ccevaluation-customer-details-id', params: { id: item.customerId } }"
                 class="font-weight-medium"
               >
                 {{ item.customer }}

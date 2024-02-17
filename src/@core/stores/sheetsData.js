@@ -1,6 +1,4 @@
-// src/@core/stores/sheetsData.js
-import { defineStore } from 'pinia'
-import { parseISO, startOfWeek, format } from 'date-fns'
+import { defineStore } from 'pinia';
 
 export const useSheetsDataStore = defineStore('sheetsData', {
   state: () => ({
@@ -8,106 +6,127 @@ export const useSheetsDataStore = defineStore('sheetsData', {
   }),
   actions: {
     async fetchSheetData() {
-      const sheetId = '1-VFSlgITO1mnX-Z1xn1rZ9wKmemGTULSiHD6Byl3WTU'
-      const apiKey = 'AIzaSyCgrfPXVtcdoKiN1-nqOl9JXyAv_yExzy0'
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`
+      const sheetId = '1-VFSlgITO1mnX-Z1xn1rZ9wKmemGTULSiHD6Byl3WTU';
+      const apiKey = 'AIzaSyCgrfPXVtcdoKiN1-nqOl9JXyAv_yExzy0';
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`;
       try {
-        const response = await fetch(url)
-        if (!response.ok) throw new Error('Network response was not ok')
-        const data = await response.json()
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
 
-        this.sheetData = data.values
+        this.sheetData = data.values;
       } catch (error) {
-        console.error('Error fetching Google Sheets data:', error)
+        console.error('Error fetching Google Sheets data:', error);
       }
     },
   },
-
   getters: {
-    
-    totalAveragePerformance: state => {
-      let total = 0
-      let entries = 0
-    
-      state.sheetData.slice(1).forEach(row => {
-        let rowTotal = 0
-        let validEntries = 0
-    
-        // Loop through the score columns, assuming they start from index 7 to 14
-        for (let i = 7; i <= 14; i++) {
-          let value = row[i]
-    
-          // Special case for the column that contains 'نعم' or 'لا'
-          if (i === 11) {
-            value = value === 'نعم' ? 10 : 0
+    totalAveragePerformance: (state) => {
+      // Updated column indices according to the new sheet order
+      let total = 0;
+      let entries = 0;
+
+      state.sheetData.slice(1).forEach((row) => {
+        let rowTotal = 0;
+        let validEntries = 0;
+
+        // Loop through the new score columns, assuming they start from index 9 to 16
+        for (let i = 9; i <= 16; i++) {
+          let value = row[i];
+
+          // Adjust for the new special case column for 'responseAbility' which is now at index 12
+          if (i === 12) {
+            value = parseFloat(value); // Assuming responseAbility is now a number
           } else {
-            value = parseFloat(value)
+            value = parseFloat(value);
           }
-    
-          // Check if the value is a number and within the expected range
+
           if (!isNaN(value) && value >= 0 && value <= 10) {
-            rowTotal += value
-            validEntries++
+            rowTotal += value;
+            validEntries++;
           }
         }
-    
-        // Calculate the average for the row if there are valid entries
+
         if (validEntries > 0) {
-          let rowAverage = rowTotal / validEntries
-          total += rowAverage
-          entries++
+          let rowAverage = rowTotal / validEntries;
+          total += rowAverage;
+          entries++;
         }
-      })
-    
-      // Calculate the total average
-      let totalAverage = entries > 0 ? total / entries : 0
-    
-      // Return the total average to two decimal places
-      return Number(totalAverage.toFixed(2))
-    },
-    yesNoPercentages: state => {
-      let yesCount = 0
-      let noCount = 0
-  
-      state.sheetData.slice(1).forEach(row => {
-        const answer = row[12] // Assuming the answers are in the 13th column (index 12)
-        if (answer === 'نعم') yesCount++
-        else if (answer === 'لا') noCount++
-      })
-  
-      const total = yesCount + noCount
+      });
 
+      let totalAverage = entries > 0 ? total / entries : 0;
+      return Number(totalAverage.toFixed(2));
+    },
+    yesNoPercentages: (state) => {
+      // Adjusted for new column index for 'caseCompletion' which is now at index 13
+      let yesCount = 0;
+      let noCount = 0;
+
+      state.sheetData.slice(1).forEach((row) => {
+        const answer = row[13]; // New index for 'caseCompletion'
+        if (answer === 'نعم') yesCount++;
+        else if (answer === 'لا') noCount++;
+      });
+
+      const total = yesCount + noCount;
       return [
-        total ? Math.round((yesCount / total) * 100) : 0, // Yes percentage
-        total ? Math.round((noCount / total) * 100) : 0,   // No percentage
-      ]
+        total ? Math.round((yesCount / total) * 100) : 0,
+        total ? Math.round((noCount / total) * 100) : 0,
+      ];
     },
-    uniqueEmployeeCount: state => {
-      const uniqueIds = new Set()
+    uniqueEmployeeCount: (state) => {
+      const uniqueIds = new Set();
 
-      state.sheetData.slice(1).forEach(row => {
-        const employeeId = row[7]?.trim() // Correct column for employee ID
+      state.sheetData.slice(1).forEach((row) => {
+        const employeeId = row[8]?.trim(); // New index for 'employeeNumber'
         if (employeeId) {
-          uniqueIds.add(employeeId)
+          uniqueIds.add(employeeId);
         }
-      })
-      
-      return uniqueIds.size
+      });
+
+      return uniqueIds.size;
     },
-    evaluationsCount: state => {
-      return state.sheetData.length > 0 ? state.sheetData.slice(1).length : 0
+    
+    evaluationsCount: (state) => {
+      let count = 0;
+
+      state.sheetData.slice(1).forEach((row) => {
+        const communicationClarity = parseFloat(row[9]);
+        const effectiveListening = parseFloat(row[10]);
+        const caseUnderstanding = parseFloat(row[11]);
+        const responseAbility = parseFloat(row[12]);
+        const caseCompletion = row[13];
+        const interactionSpeed = parseFloat(row[14]);
+        const knowledgeCommitment = parseFloat(row[15]);
+        const productUnderstanding = parseFloat(row[16]);
+
+        if (
+          !isNaN(communicationClarity) ||
+          !isNaN(effectiveListening) ||
+          !isNaN(caseUnderstanding) ||
+          !isNaN(responseAbility) ||
+          caseCompletion ||
+          !isNaN(interactionSpeed) ||
+          !isNaN(knowledgeCommitment) ||
+          !isNaN(productUnderstanding)
+        ) {
+          count++;
+        }
+      });
+
+      return count;
     },
-    averageColumnValues: state => {
-      // Initialize sums and counts for each specified column
+    averageColumnValues: (state) => {
+      // Adjusted column indices
       let sums = {
-        communicationClarity: 0, // Column 8
-        effectiveListening: 0,   // Column 9
-        caseUnderstanding: 0,    // Column 10
-        responseAbility: 0,      // Column 11
-        interactionSpeed: 0,     // Column 13
-        knowledgeCommitment: 0,  // Column 14
-        productUnderstanding: 0, // Column 15
-      }
+        communicationClarity: 0,
+        effectiveListening: 0,
+        caseUnderstanding: 0,
+        responseAbility: 0,
+        interactionSpeed: 0,
+        knowledgeCommitment: 0,
+        productUnderstanding: 0,
+      };
       let counts = {
         communicationClarity: 0,
         effectiveListening: 0,
@@ -116,47 +135,49 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         interactionSpeed: 0,
         knowledgeCommitment: 0,
         productUnderstanding: 0,
-      }
-    
-      // Start iterating from the first data row, skipping the header
-      state.sheetData.slice(1).forEach(row => {
-        // Update sums and counts for each column if the value is a number
+      };
+
+      state.sheetData.slice(1).forEach((row) => {
         Object.keys(sums).forEach((key, index) => {
-          const columnIndex = [8, 9, 10, 11, 13, 14, 15][index]
-          const value = parseFloat(row[columnIndex])
+          // Adjusted column indices for the new sheet order
+          const columnIndex = [9, 10, 11, 12, 14, 15, 16][index];
+          const value = parseFloat(row[columnIndex]);
           if (!isNaN(value)) {
-            sums[key] += value
-            counts[key]++
+            sums[key] += value;
+            counts[key]++;
           }
-        })
-      })
-    
-      // Calculate averages for each column
-      let averages = {}
-      Object.keys(sums).forEach(key => {
-        averages[key] = counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A"
-      })
-    
-      return averages
+        });
+      });
+
+      let averages = {};
+      Object.keys(sums).forEach((key) => {
+        averages[key] = counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A";
+      });
+
+      return averages;
     },
-    
-  }
+  },
 });
 
+
+
+// new order of the sheet:
 // serialNumber: row[0],
-// caseNumber: row[1],
-// contactType: row[2],
-// caseDate: row[3],
-// evaluationDate: row[4],
-// employeeInfo: row[5],
-// fullName: row[6],
-// employeeNumber: row[7],
-// communicationClarity: parseFloat(row[8]),
-// effectiveListening: parseFloat(row[9]),
-// caseUnderstanding: parseFloat(row[10]),
-// responseAbility: row[11] === 'نعم' ? 10 : (row[11] === 'لا' ? 0 : parseFloat(row[11])),
-// caseCompletion: row[12], // Assume 'Yes' or 'No' values are in this column
-// interactionSpeed: parseFloat(row[13]),
-// knowledgeCommitment: parseFloat(row[14]),
-// productUnderstanding: parseFloat(row[15]),
-// notes: row[16],
+// caseLink: row[1],
+// caseNumber: row[2],
+// contactType: row[3],
+// caseDate: row[4],
+// evaluationDate: row[5],
+// employeeInfo: row[6],
+// fullName: row[7],
+// employeeNumber: row[8],
+// communicationClarity: parseFloat(row[9]),
+// effectiveListening: parseFloat(row[10]),
+// caseUnderstanding: parseFloat(row[11]),
+// responseAbility: parseFloat(row[12]),
+// caseCompletion: row[13],
+// interactionSpeed: parseFloat(row[14]),
+// knowledgeCommitment: parseFloat(row[15]),
+// productUnderstanding: parseFloat(row[16]),
+// feedback: row[17],
+// correction: row[18],

@@ -193,7 +193,7 @@ const resolveStatus = statusMsg => {
 const {
   data: productsData,
   execute: fetchProducts,
-} = await useApi(createUrl('/apps/ecommerce/products', {
+} = await useApi(createUrl('/apps/ccevaluation/products', {
   query: {
     q: searchQuery,
     stock: selectedStock,
@@ -210,7 +210,7 @@ const products = computed(() => productsData.value.products)
 const totalProduct = computed(() => productsData.value.total)
 
 const deleteProduct = async id => {
-  await $api(`apps/ecommerce/products/${ id }`, { method: 'DELETE' })
+  await $api(`apps/ccevaluation/products/${ id }`, { method: 'DELETE' })
   fetchProducts()
 }
 </script>
@@ -371,7 +371,7 @@ const deleteProduct = async id => {
           <VBtn
             color="primary"
             prepend-icon="tabler-plus"
-            @click="$router.push('/apps/ecommerce/product/add')"
+            @click="$router.push('/apps/ccevaluation/product/add')"
           >
             Add Product
           </VBtn>

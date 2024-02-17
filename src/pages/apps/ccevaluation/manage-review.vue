@@ -12,7 +12,7 @@ const orderBy = ref()
 const {
   data: ReviewData,
   execute: fetchReviews,
-} = await useApi(createUrl('/apps/ecommerce/reviews', {
+} = await useApi(createUrl('/apps/ccevaluation/reviews', {
   query: {
     q: searchQuery,
     status: selectedStatus,
@@ -33,7 +33,7 @@ const updateOptions = options => {
 }
 
 const deleteReview = async id => {
-  await $api(`/apps/ecommerce/reviews/${ id }`, { method: 'DELETE' })
+  await $api(`/apps/ccevaluation/reviews/${ id }`, { method: 'DELETE' })
   fetchReviews()
 }
 
@@ -490,7 +490,7 @@ const reviewStatChartConfig = {
               />
               <div class="d-flex flex-column">
                 <RouterLink
-                  :to="{ name: 'apps-ecommerce-customer-details-id', params: { id: 478426 } }"
+                  :to="{ name: 'apps-ccevaluation-customer-details-id', params: { id: 478426 } }"
                   class="font-weight-medium"
                 >
                   {{ item.reviewer }}
@@ -537,7 +537,7 @@ const reviewStatChartConfig = {
                 <VList>
                   <VListItem
                     value="view"
-                    :to="{ name: 'apps-ecommerce-order-details-id', params: { id: item.id } }"
+                    :to="{ name: 'apps-ccevaluation-order-details-id', params: { id: item.id } }"
                   >
                     View
                   </VListItem>
