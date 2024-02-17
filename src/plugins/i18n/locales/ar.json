@@ -178,6 +178,13 @@
   "Average product Understanding": "متوسط فهم المنتج",
   "Case First time Completion Rate": "   ايجاد الحل من اول مره  ",
   "caseFirstTimeCompletionRate": "معدل الإنجاز من المرة الأولى للحالة",
+  "refresh": "تحديث",
+  "download": "تحميل",
+  "viewAll": "عرض الكل",
+  "employeePerformances": "أداء الموظفين",
+  "dailyPerformanceOverview": "نظرة عامة على الأداء اليومي",
+  "averagePerformance": "الأداء العام",
+
   "$vuetify": {
     "badge": "شارة",
     "noDataText": "لا تتوافر بيانات",
@@ -219,6 +226,11 @@
       "ariaLabel": {
         "item": "العنصر"
       }
-    }
+    },
+    
+
+    
+
+
   }
 }

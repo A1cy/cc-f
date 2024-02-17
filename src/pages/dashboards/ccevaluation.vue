@@ -27,42 +27,42 @@ store.fetchSheetData() // Fetch data on component mount or when needed
 
 <template>
   <VRow class="match-height">
-    <VCol cols="12">
-      <CardStatisticsTransactions />
-    </VCol>
-    
-
+  
     <VCol
       cols="12"
       md="6"
     >
       <CcSupportTracker />
     </VCol>
+
+      <VCol cols="12" md="6">
+      <EcommerceEarningReports />
+      </VCol>
+
+    <VCol cols="12">
+      <CardStatisticsTransactions />
+    </VCol>
+    
+    <VCol cols="12">
+      <EcommerceCongratulationsJohn />
+      </VCol>
+   
     <VCol
-      cols="12"
-      md="6"
+      cols="4"
+      md="4"
     >
       <VCard>
         <yesNoPercentage />
       </VCard>
     </VCol>
 
-    <VCol cols="12" md="6" lg="5">
-      <EcommerceCongratulationsJohn />
-      </VCol>
+  
 
-
-      <VCol cols="12" md="6" lg="7">
-      <EcommerceEarningReports />
-      </VCol>
-
-
-
-
-    <VCol cols="12">
+    <VCol cols="8">
       <datasheet />
     </VCol>
-    <!-- Integration of Google Sheets Data -->
+    
+<!--     
    
       <VCol cols="12" md="12" lg="12" />
      
@@ -109,7 +109,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       <VCol cols="12" lg="8">
       <EcommerceInvoiceTable />
       </VCol> 
-    
+     -->
   </VRow>
 </template>
 

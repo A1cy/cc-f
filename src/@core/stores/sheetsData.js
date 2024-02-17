@@ -207,8 +207,55 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         avgScore: bestScore !== -Infinity ? bestScore.toFixed(2) : "N/A",
       };
     },
+
+    dailyEmployeePerformances: (state) => {
+      try {
+        const employeePerformances = {};
     
+        console.log('sheetData:', state.sheetData); // Log the sheetData array
     
+        state.sheetData.slice(1).forEach((row, index) => {
+          if (!row[6] || !row[5]) {
+            console.log(`Row ${index + 1} is missing data. Skipping this row.`);
+            return; // Skip this iteration if row[6] or row[5] is undefined
+          }
+    
+          const employeeName = row[6].trim(); // employeeInfo
+          const evaluationDate = new Date(row[5]).toDateString(); // Convert date to string for easy comparison
+    
+          console.log(`Row ${index + 1}: employeeName = ${employeeName}, evaluationDate = ${evaluationDate}`); // Log the employeeName and evaluationDate
+    
+          const scores = [
+            parseFloat(row[9]), // communicationClarity
+            parseFloat(row[10]), // effectiveListening
+            parseFloat(row[11]), // caseUnderstanding
+            parseFloat(row[12]), // responseAbility
+            parseFloat(row[13]) === 'نعم' ? 10 : parseFloat(row[13]) === 'لا' ? 0 : parseFloat(row[13]), // caseCompletion, assuming نعم = 10, لا = 0
+            parseFloat(row[14]), // interactionSpeed
+            parseFloat(row[15]), // knowledgeCommitment
+            parseFloat(row[16]), // productUnderstanding
+            row[17] ? -1 : 0, // feedback, assuming any feedback is negative
+          ].filter(score => !isNaN(score));
+    
+          console.log(`Row ${index + 1}: scores =`, scores); // Log the scores array
+    
+          const totalScore = scores.reduce((acc, curr) => acc + curr, 0);
+          const averageScore = scores.length > 0 ? totalScore / scores.length : 0;
+    
+          if (!employeePerformances[employeeName]) {
+            employeePerformances[employeeName] = {};
+          }
+    
+          employeePerformances[employeeName][evaluationDate] = averageScore;
+        });
+    
+        console.log('employeePerformances:', employeePerformances); // Log the employeePerformances object
+    
+        return employeePerformances;
+      } catch (error) {
+        console.error('Error in dailyEmployeePerformances function:', error); // Log any errors that occur during the execution of the function
+      }
+    },
 
   },
 });
