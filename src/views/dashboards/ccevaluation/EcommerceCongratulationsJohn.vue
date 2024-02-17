@@ -1,5 +1,22 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import { useSheetsDataStore } from '@/@core/stores/sheetsData';
 import congoImg from '@images/illustrations/laptop-girl.png'
+
+const store = useSheetsDataStore();
+const bestEmployeeDetails = ref({name: '', avgScore: 'N/A'});
+
+
+onMounted(async () => {
+  try {
+    await store.fetchBestEmployeeDetails(); // Assuming there's a method to fetch the data from the store
+    bestEmployeeDetails.value = store.bestEmployeeDetails; // This should trigger reactivity
+    console.log('Best Employee Details:', bestEmployeeDetails.value); // For debugging
+  } catch (error) {
+    console.error('Error fetching best employee details:', error);
+  }
+});
+
 </script>
 
 <template>
@@ -8,15 +25,16 @@ import congoImg from '@images/illustrations/laptop-girl.png'
       <VCol cols="8">
         <VCardText>
           <h6 class="text-lg text-no-wrap font-weight-medium">
-            Congratulations Fatimah! 🎉
+            
+            Congratulations {{ store.bestEmployeeDetails.name }}!! 🎉
           </h6>
           <p class="mb-2">
-            Best cc of the month
+            Best customer care employee of the week
           </p>
           <h4 class="text-h4 font-weight-medium text-primary mb-1">
-            $48.9k
+            Avg: {{ store.bestEmployeeDetails.avgScore }}/10
           </h4>
-          <VBtn>View Sales</VBtn>
+          <VBtn>View Performance</VBtn>
         </VCardText>
       </VCol>
 

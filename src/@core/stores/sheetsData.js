@@ -156,6 +156,60 @@ export const useSheetsDataStore = defineStore('sheetsData', {
 
       return averages;
     },
+ 
+    bestEmployeeDetails: (state) => {
+      const now = new Date();
+      const startOfWeek = now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1); // Adjust for week start (Sunday or Monday depending on your locale)
+      const startOfThisWeek = new Date(now.setDate(startOfWeek));
+      startOfThisWeek.setHours(0, 0, 0, 0);
+    
+      const employeeScores = {};
+      const employeeCounts = {};
+    
+      state.sheetData.slice(1).forEach((row) => {
+        const evaluationDate = new Date(row[5]);
+        if (evaluationDate >= startOfThisWeek && evaluationDate <= new Date()) {
+          const employeeName = row[7].trim();
+          const scores = [
+            parseFloat(row[9]), // communicationClarity
+            parseFloat(row[10]), // effectiveListening
+            parseFloat(row[11]), // caseUnderstanding
+            parseFloat(row[12]), // responseAbility
+            parseFloat(row[14]), // interactionSpeed
+          ].filter(score => !isNaN(score));
+    
+          const feedback = row[17] ? -1 : 0; // Assuming feedback is always negative
+          const totalScore = scores.reduce((acc, curr) => acc + curr, 0) + feedback;
+    
+          if (employeeScores.hasOwnProperty(employeeName)) {
+            employeeScores[employeeName] += totalScore;
+            employeeCounts[employeeName] += scores.length;
+          } else {
+            employeeScores[employeeName] = totalScore;
+            employeeCounts[employeeName] = scores.length;
+          }
+        }
+      });
+    
+      let bestEmployeeName = '';
+      let bestScore = -Infinity;
+    
+      Object.keys(employeeScores).forEach((employee) => {
+        const avgScore = employeeScores[employee] / employeeCounts[employee];
+        if (avgScore > bestScore) {
+          bestEmployeeName = employee;
+          bestScore = avgScore;
+        }
+      });
+    
+      return {
+        name: bestEmployeeName || "No data",
+        avgScore: bestScore !== -Infinity ? bestScore.toFixed(2) : "N/A",
+      };
+    },
+    
+    
+
   },
 });
 

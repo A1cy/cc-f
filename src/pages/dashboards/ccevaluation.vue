@@ -1,15 +1,15 @@
 <script setup>
-// import EcommerceCongratulationsJohn from '@/views/dashboards/ccevaluation/EcommerceCongratulationsJohn.vue'
-// import EcommerceEarningReports from '@/views/dashboards/ccevaluation/EcommerceEarningReports.vue'
-// import EcommerceExpensesRadialBarCharts from '@/views/dashboards/ccevaluation/EcommerceExpensesRadialBarCharts.vue'
-// import EcommerceGeneratedLeads from '@/views/dashboards/ccevaluation/EcommerceGeneratedLeads.vue'
-// import EcommerceInvoiceTable from '@/views/dashboards/ccevaluation/EcommerceInvoiceTable.vue'
-// import EcommerceOrder from '@/views/dashboards/ccevaluation/EcommerceOrder.vue'
-// import EcommercePopularProducts from '@/views/dashboards/ccevaluation/EcommercePopularProducts.vue'
+
+import EcommerceEarningReports from '@/views/dashboards/ccevaluation/EcommerceEarningReports.vue'
+import EcommerceExpensesRadialBarCharts from '@/views/dashboards/ccevaluation/EcommerceExpensesRadialBarCharts.vue'
+import EcommerceGeneratedLeads from '@/views/dashboards/ccevaluation/EcommerceGeneratedLeads.vue'
+import EcommerceInvoiceTable from '@/views/dashboards/ccevaluation/EcommerceInvoiceTable.vue'
+import EcommerceOrder from '@/views/dashboards/ccevaluation/EcommerceOrder.vue'
+import EcommercePopularProducts from '@/views/dashboards/ccevaluation/EcommercePopularProducts.vue'
 // import EcommerceRevenueReport from '@/views/dashboards/ccevaluation/EcommerceRevenueReport.vue'
-// import EcommerceStatistics from '@/views/dashboards/ccevaluation/EcommerceStatistics.vue'
-// import EcommerceTotalProfitLineCharts from '@/views/dashboards/ccevaluation/EcommerceTotalProfitLineCharts.vue'
-// import EcommerceTransactions from '@/views/dashboards/ccevaluation/EcommerceTransactions.vue'
+import EcommerceStatistics from '@/views/dashboards/ccevaluation/EcommerceStatistics.vue'
+import EcommerceTotalProfitLineCharts from '@/views/dashboards/ccevaluation/EcommerceTotalProfitLineCharts.vue'
+import EcommerceTransactions from '@/views/dashboards/ccevaluation/EcommerceTransactions.vue'
 import {
   useSheetsDataStore,
 } from '@/@core/stores/sheetsData'
@@ -17,6 +17,7 @@ import CardStatisticsTransactions from '@/views/pages/cards/card-statistics/Card
 import yesNoPercentage from '@/views/apps/ccevaluation/yesNoPercentage.vue'
 import CcSupportTracker from '@/views/apps/ccevaluation/CcSupportTracker.vue'
 import datasheet from '@/views/apps/ccevaluation/datasheet.vue'
+import EcommerceCongratulationsJohn from '@/views/dashboards/ccevaluation/EcommerceCongratulationsJohn.vue'
 
 
 const store = useSheetsDataStore()
@@ -29,6 +30,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
     <VCol cols="12">
       <CardStatisticsTransactions />
     </VCol>
+    
 
     <VCol
       cols="12"
@@ -44,15 +46,26 @@ store.fetchSheetData() // Fetch data on component mount or when needed
         <yesNoPercentage />
       </VCard>
     </VCol>
+
+    <VCol cols="12" md="6" lg="5">
+      <EcommerceCongratulationsJohn />
+      </VCol>
+
+
+      <VCol cols="12" md="6" lg="7">
+      <EcommerceEarningReports />
+      </VCol>
+
+
+
+
     <VCol cols="12">
       <datasheet />
     </VCol>
     <!-- Integration of Google Sheets Data -->
-    <!-- 
+   
       <VCol cols="12" md="12" lg="12" />
-      <VCol cols="12" md="5" lg="4">
-      <EcommerceCongratulationsJohn />
-      </VCol>
+     
 
  
       <VCol cols="12" md="7" lg="8">
@@ -75,13 +88,11 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       </VRow>
       </VCol>
 
-      <VCol cols="12" lg="8">
+       <VCol cols="12" lg="8">
       <EcommerceRevenueReport />
-      </VCol>
+      </VCol> 
 
-      <VCol cols="12" sm="6" lg="4">
-      <EcommerceEarningReports />
-      </VCol>
+     
 
       <VCol cols="12" sm="6" lg="4">
       <EcommercePopularProducts />
@@ -98,7 +109,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
       <VCol cols="12" lg="8">
       <EcommerceInvoiceTable />
       </VCol> 
-    -->
+    
   </VRow>
 </template>
 

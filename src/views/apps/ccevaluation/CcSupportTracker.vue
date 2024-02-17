@@ -1,21 +1,20 @@
 <script setup>
-import { computed } from 'vue';
-import VueApexCharts from 'vue3-apexcharts';
 import { useSheetsDataStore } from '@core/stores/sheetsData.js'; // Ensure this path is correct
-import { useTheme } from 'vuetify';
 import { hexToRgb } from '@layouts/utils';
-import { useI18n } from 'vue-i18n' // Import useI18n
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n'; // Import useI18n
+import VueApexCharts from 'vue3-apexcharts';
+import { useTheme } from 'vuetify';
 const { t } = useI18n()
 const store = useSheetsDataStore();
 const vuetifyTheme = useTheme();
-
 // Bind the calculated average performance to the series
 const series = computed(() => [store.totalAveragePerformance * 10]);
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors;
   const variableTheme = vuetifyTheme.current.value.variables;
-  
+
   return {
     labels: ['AVG'],
     chart: { type: 'radialBar' },
@@ -42,9 +41,9 @@ const chartOptions = computed(() => {
             color: `rgba(${hexToRgb(currentTheme['on-background'])}, ${variableTheme['high-emphasis-opacity']})`,
             fontSize: '38px',
             fontWeight: '400',
-            fontFamily: 'Public Sans',  
-                    
-            
+            fontFamily: 'Public Sans',
+
+
 
             formatter: (val) => `${(val / 10).toFixed(2)} /10`, // This will format the value as a decimal out of 10
           },
@@ -106,38 +105,28 @@ const supportTicket = [
 </script>
 
 <template>
-  <VCard
-    
-    :title="t('Support Tracker')"
-   >
+  <VCard :title="t('Support Tracker')">
     <template #append>
       <div class="mt-n4 me-n2">
-        <MoreBtn :menu-list="[{ title: 'View More', value: 'View More' }, { title: 'Delete', value: 'Delete' }]" />
+        <MoreBtn
+          :menu-list="[{ title: 'View More', value: 'View More' }, { title: 'Delete', value: 'Delete' }]" />
       </div>
     </template>
 
     <VCardText>
       <VRow>
-        <VCol
-          cols="12"
-          md="5"
-          sm="6"
-          class="mt-auto"
-        >
+        <VCol cols="12" md="5" sm="6" class="mt-auto">
           <div class="mb-6">
             <h4 class="text-h1">
-              {{store.evaluationsCount}}
+              {{ store.evaluationsCount }}
             </h4>
             <p>
-              {{ t('totalEvaluations') }}  
-             </p>
+              {{ t('totalEvaluations') }}
+            </p>
           </div>
 
           <VList class="card-list">
-            <VListItem
-              v-for="ticket in supportTicket"
-              :key="ticket.title"
-            >
+            <VListItem v-for="ticket in supportTicket" :key="ticket.title">
               <VListItemTitle class="font-weight-medium">
                 {{ ticket.title }}
               </VListItemTitle>
@@ -145,28 +134,15 @@ const supportTicket = [
                 {{ ticket.subtitle }}
               </VListItemSubtitle>
               <template #prepend>
-                <VAvatar
-                  rounded
-                  size="34"
-                  :color="ticket.avatarColor"
-                  variant="tonal"
-                >
+                <VAvatar rounded size="34" :color="ticket.avatarColor" variant="tonal">
                   <VIcon :icon="ticket.avatarIcon" />
                 </VAvatar>
               </template>
             </VListItem>
           </VList>
         </VCol>
-        <VCol
-          cols="12"
-          md="7"
-          sm="6"
-        >
-          <VueApexCharts
-            :options="chartOptions"
-            :series="series"
-            height="340"
-          />
+        <VCol cols="12" md="7" sm="6">
+          <VueApexCharts :options="chartOptions" :series="series" height="340" />
         </VCol>
       </VRow>
     </VCardText>
