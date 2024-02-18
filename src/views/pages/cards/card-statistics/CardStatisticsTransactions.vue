@@ -15,42 +15,42 @@ const statistics = computed(() => [
   {
     title: t('Average effective Listening'),
     stats: store.averageColumnValues.effectiveListening,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-volume-2',
     color: 'success',
   },
  
   {
     title: t('Average case Understanding'),
     stats: store.averageColumnValues.caseUnderstanding,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-folder-check',
     color: 'error',
   },
  
   {
     title: t('Average responseAbility'),
     stats: store.averageColumnValues.responseAbility,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-user-check',
     color: 'primary',
   },
  
   {
     title: t('Average interaction Speed'),
     stats: store.averageColumnValues.interactionSpeed,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-trending-up',
     color: 'success',
   },
  
   {
     title: t('Average knowledge Commitment'),
     stats: store.averageColumnValues.knowledgeCommitment,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-bookmark',
     color: 'error',
   },
  
   {
     title: t('Average product Understanding'),
     stats: store.averageColumnValues.productUnderstanding,
-    icon: 'tabler-chart-pie-2',
+    icon: 'tabler-package',
     color: 'success',
   },
   

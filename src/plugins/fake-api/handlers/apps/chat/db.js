@@ -11,7 +11,7 @@ const dayBeforePreviousDay = new Date(new Date().getTime() - 24 * 60 * 60 * 1000
 export const db = {
   profileUser: {
     id: 11,
-    avatar: avatar1,
+    avatar: avatar2,
     fullName: 'Fatimah Alzahrani',
     role: 'admin',
     about: 'Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie marshmallow.',
@@ -27,7 +27,7 @@ export const db = {
       fullName: 'Gavin Griffith',
       role: 'Frontend Developer',
       about: 'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
-      avatar: avatar5,
+      avatar: avatar1,
       status: 'offline',
     },
     {

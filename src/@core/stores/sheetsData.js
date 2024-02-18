@@ -15,12 +15,45 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         const data = await response.json();
 
         this.sheetData = data.values;
+        this.calculateEmployeesPerformance(); // Calculate performance after fetching
       } catch (error) {
         console.error('Error fetching Google Sheets data:', error);
       }
     },
+    calculateEmployeesPerformance() {
+      this.employeesPerformance = this.sheetData.slice(1) // Assuming the first row contains headers
+        .filter(row => row.length > 0 && row[8] !== undefined) // Filter out empty rows or rows without employee numbers
+        .map(row => {
+          const scores = [
+            parseFloat(row[9]),
+            parseFloat(row[10]),
+            parseFloat(row[11]),
+            parseFloat(row[12]),
+            row[13] === 'نعم' ? 10 : row[13] === 'لا' ? 0 : parseFloat(row[13]),
+            parseFloat(row[14]),
+            parseFloat(row[15]),
+            parseFloat(row[16]),
+            row[17] ? -1 : 0,
+          ].filter(score => !isNaN(score));
+    
+          const totalScore = scores.reduce((acc, score) => acc + score, 0);
+          const averageScore = scores.length > 0 ? totalScore / scores.length : 0;
+    
+          return {
+            employeeInfo: row[6] || 'Info not available',
+            fullName: row[7] || 'Name not available',
+            employeeNumber: row[8] || 'Number not available',
+            totalAveragePerformance: averageScore.toFixed(2),
+          };
+        });
+    },
   },
   getters: {
+
+    getUserData: (state) => (userId) => {
+      const userRow = state.sheetData.find(row => row[8]?.trim() === userId);
+      return userRow ? userRow[7] : null; // Return the full name or null if not found
+    },
     totalAveragePerformance: (state) => {
       // Updated column indices according to the new sheet order
       let total = 0;
