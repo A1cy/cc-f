@@ -35,6 +35,8 @@ const vuetifyTheme = useTheme();
 // Reactive properties for series and performance reports
 const series = ref([]);
 const performanceReports = ref([]);
+// Fetch sheet data and update component state
+
 
 // Fetch sheet data and update component state
 onMounted(async () => {
@@ -47,21 +49,33 @@ onMounted(async () => {
     const aggregatedPerformances = [];
     Object.keys(dailyPerformances).forEach(employeeName => {
       const dates = Object.keys(dailyPerformances[employeeName]);
-      const performances = dates.map(date => dailyPerformances[employeeName][date]);
+      const lastSevenDays = dates.slice(-7); // Limit to last seven days
+      const performances = lastSevenDays.map(date => dailyPerformances[employeeName][date]);
       const averagePerformance = performances.reduce((a, b) => a + b, 0) / performances.length;
+      
+        // Check if the color for this employee is already stored
+        let color = localStorage.getItem(employeeName);
+      if (!color) {
+        // If not, generate a new color and store it
+        color = stringToColor(employeeName);
+        localStorage.setItem(employeeName, color);
+      }
+
+      
       aggregatedPerformances.push({
         name: employeeName,
         data: performances,
-        averagePerformance
+        averagePerformance,
+        color: color // Assign a unique color to each employee based on their name
       });
     });
 
     // Update series for chart based on aggregated performances
     series.value = aggregatedPerformances.map(perf => ({
-    name: perf.name,
-    data: perf.data,
-    color: stringToColor(perf.name) // Assign a unique color to each employee based on their name
-  }));
+      name: perf.name,
+      data: perf.data,
+      color: perf.color // Use the assigned color for each employee
+    }));
 
     // Update performanceReports for list based on average performances
     performanceReports.value = aggregatedPerformances.map(perf => ({
@@ -110,7 +124,7 @@ const chartOptions = computed(() => {
     dataLabels: { enabled: false },
     legend: { show: true },
     xaxis: {
-      categories: getLastSevenDays(),
+      categories: getLastSevenDays().slice(0, 7), // Limit to 7 days
       axisBorder: { show: false },
       axisTicks: { show: false },
       labels: {
