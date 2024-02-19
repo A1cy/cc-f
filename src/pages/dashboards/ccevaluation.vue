@@ -18,6 +18,7 @@ import yesNoPercentage from '@/views/apps/ccevaluation/yesNoPercentage.vue'
 import CcSupportTracker from '@/views/apps/ccevaluation/CcSupportTracker.vue'
 import datasheet from '@/views/apps/ccevaluation/datasheet.vue'
 import EcommerceCongratulationsJohn from '@/views/dashboards/ccevaluation/EcommerceCongratulationsJohn.vue'
+import TeamAvg from '@/views/dashboards/ccevaluation/TeamAvg.vue'
 
 
 const store = useSheetsDataStore()
@@ -27,13 +28,15 @@ store.fetchSheetData() // Fetch data on component mount or when needed
 
 <template>
   <VRow class="match-height">
-    <VCol cols="12" md="5">
-      <CardStatisticsTransactions />
-    </VCol>
     
-      <VCol cols="12" md="7">
+    
+      <VCol cols="12" md="12">
       <EcommerceEarningReports />
       </VCol>
+
+      <VCol cols="12" md="12">
+      <CardStatisticsTransactions />
+    </VCol>
 
       <VCol
       cols="12"
@@ -53,6 +56,9 @@ store.fetchSheetData() // Fetch data on component mount or when needed
     
     <VCol cols="12">
       <EcommerceCongratulationsJohn />
+      </VCol>
+    <VCol cols="12">
+      <TeamAvg />
       </VCol>
    
    

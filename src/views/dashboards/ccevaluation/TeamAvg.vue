@@ -17,7 +17,7 @@ onMounted(async () => {
       v-for="employee in employeesPerformance"
       :key="employee.employeeNumber"
       sm="6"
-      lg="4"
+      lg="3"
       cols="12"
     >
       <VCard>

@@ -3,12 +3,10 @@ import { ref, onMounted } from "vue";
 import { useSheetsDataStore } from "@/@core/stores/sheetsData";
 
 const store = useSheetsDataStore();
-const firstEmployeePerformance = ref({});
 
 onMounted(async () => {
-  await store.fetchSheetData();
-  if (store.employeesPerformance.length > 0) {
-    firstEmployeePerformance.value = store.employeesPerformance[0];
+  if (store.employeesPerformance.length === 0) {
+    await store.fetchSheetData();
   }
 });
 </script>
@@ -51,6 +49,7 @@ onMounted(async () => {
     </VCard>
   </div>
 </template>
+
 
 
 
