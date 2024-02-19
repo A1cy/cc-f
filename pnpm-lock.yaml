@@ -22,12 +22,21 @@ dependencies:
   '@floating-ui/dom':
     specifier: 1.5.3
     version: 1.5.3
+  '@iconify-icons/mdi':
+    specifier: ^1.2.48
+    version: 1.2.48
   '@iconify-json/fa':
     specifier: ^1.1.5
     version: 1.1.8
   '@iconify-json/tabler':
     specifier: ^1.1.96
     version: 1.1.105
+  '@mdi/font':
+    specifier: ^7.4.47
+    version: 7.4.47
+  '@mdi/js':
+    specifier: ^7.4.47
+    version: 7.4.47
   '@sindresorhus/is':
     specifier: ^6.0.1
     version: 6.1.0
@@ -145,19 +154,19 @@ devDependencies:
     specifier: ^0.43.1
     version: 0.43.1(@typescript-eslint/parser@6.20.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)(typescript@5.3.3)
   '@antfu/utils':
-    specifier: ^0.7.6
+    specifier: ^0.7.7
     version: 0.7.7
   '@fullcalendar/core':
-    specifier: ^6.1.9
+    specifier: ^6.1.10
     version: 6.1.10
   '@fullcalendar/daygrid':
-    specifier: ^6.1.9
+    specifier: ^6.1.10
     version: 6.1.10(@fullcalendar/core@6.1.10)
   '@fullcalendar/interaction':
     specifier: ^6.1.9
     version: 6.1.10(@fullcalendar/core@6.1.10)
   '@fullcalendar/list':
-    specifier: ^6.1.9
+    specifier: ^6.1.10
     version: 6.1.10(@fullcalendar/core@6.1.10)
   '@fullcalendar/timegrid':
     specifier: ^6.1.9
@@ -178,7 +187,7 @@ devDependencies:
     specifier: 4.1.1
     version: 4.1.1(vue@3.4.15)
   '@intlify/unplugin-vue-i18n':
-    specifier: ^1.4.0
+    specifier: ^1.6.0
     version: 1.6.0(vue-i18n@9.9.1)
   '@tabler/icons':
     specifier: ^2.39.0
@@ -1071,6 +1080,12 @@ packages:
   /@humanwhocodes/object-schema@2.0.2:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
 
+  /@iconify-icons/mdi@1.2.48:
+    resolution: {integrity: sha512-51bfNoRLhYDfxSu0Nyi/uRVq6q/tP4TyEc0vvuNwImrXpxrRJUAWJF2A36CfBkXm3hO9IBlph/CD/XNDJKgG6w==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
+
   /@iconify-json/fa@1.1.8:
     resolution: {integrity: sha512-he23ZsuDxA6Hx7rnrEpSJnmu7t7RtG/SbrENZhMSPiZ4bNRGHjyPZimtOy10k2/nfwNsW57ECDsO5eK0BkcoMg==}
     dependencies:
@@ -1279,6 +1294,14 @@ packages:
   /@mapbox/whoots-js@3.1.0:
     resolution: {integrity: sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==}
     engines: {node: '>=6.0.0'}
+    dev: false
+
+  /@mdi/font@7.4.47:
+    resolution: {integrity: sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw==}
+    dev: false
+
+  /@mdi/js@7.4.47:
+    resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
     dev: false
 
   /@mswjs/cookies@0.2.2:
