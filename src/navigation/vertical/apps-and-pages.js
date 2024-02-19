@@ -61,11 +61,11 @@ export default [
   //     { title: 'Fleet', to: 'apps-logistics-fleet' },
   //   ],
   // },
-  {
-    title: 'Email',
-    icon: { icon: 'tabler-mail' },
-    // to: 'apps-email',
-  },
+  // {
+  //   title: 'Email',
+  //   icon: { icon: 'tabler-mail' },
+  //   // to: 'apps-email',
+  // },
   // {
   //   title: 'Chat',
   //   icon: { icon: 'tabler-message-circle' },
@@ -86,14 +86,14 @@ export default [
   //     { title: 'Add', to: 'apps-invoice-add' },
   //   ],
   // },
-  {
-    title: 'User',
-    icon: { icon: 'tabler-users' },
-    children: [
-      { title: 'List', to: 'apps-user-list' },
-      { title: 'View', to: { name: 'apps-user-view-id', params: { id: 21 } } },
-    ],
-  },
+  // {
+  //   title: 'User',
+  //   icon: { icon: 'tabler-users' },
+  //   children: [
+  //     { title: 'List', to: 'apps-user-list' },
+  //     { title: 'View', to: { name: 'apps-user-view-id', params: { id: 21 } } },
+  //   ],
+  // },
   // {
   //   title: 'Roles & Permissions',
   //   icon: { icon: 'tabler-settings' },
@@ -102,11 +102,11 @@ export default [
   //     { title: 'Permissions', to: 'apps-permissions' },
   //   ],
   // },
-  {
-    title: 'Pages',
-    icon: { icon: 'tabler-file' },
-    children: [
-      { title: 'CC ProfileS', to: { name: 'pages-user-profile-tab', params: { tab: 'profile' } } },
+  //{
+    //title: 'Pages',
+    //icon: { icon: 'tabler-file' },
+    //children: [
+     // { title: 'CC ProfileS', to: { name: 'pages-user-profile-tab', params: { tab: 'profile' } } },
       // { title: 'Account Settings', to: { name: 'pages-account-settings-tab', params: { tab: 'account' } } },
       // { title: 'Pricing', to: 'pages-pricing' },
       // { title: 'FAQ', to: 'pages-faq' },
@@ -119,8 +119,8 @@ export default [
       //     { title: 'Not Authorized - 401', to: { path: '/pages/misc/not-authorized' }, target: '_blank' },
       //   ],
       // },
-    ],
-  },
+   // ],
+  //},
   // {
   //   title: 'Authentication',
   //   icon: { icon: 'tabler-lock' },
