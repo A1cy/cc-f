@@ -1,31 +1,33 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useSheetsDataStore = defineStore('sheetsData', {
+export const useSheetsDataStore = defineStore("sheetsData", {
   state: () => ({
     sheetData: [],
+    employeesPerformance: [],
   }),
   actions: {
     async fetchSheetData() {
-      const sheetId = '1-VFSlgITO1mnX-Z1xn1rZ9wKmemGTULSiHD6Byl3WTU';
-      const apiKey = 'AIzaSyCgrfPXVtcdoKiN1-nqOl9JXyAv_yExzy0';
+      const sheetId = "1-VFSlgITO1mnX-Z1xn1rZ9wKmemGTULSiHD6Byl3WTU";
+      const apiKey = "AIzaSyCgrfPXVtcdoKiN1-nqOl9JXyAv_yExzy0";
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z1000?key=${apiKey}`;
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
-
         this.sheetData = data.values;
-        this.calculateEmployeesPerformance(); // Calculate performance after fetching
+        this.calculateEmployeesPerformance();
       } catch (error) {
-        console.error('Error fetching Google Sheets data:', error);
+        console.error("Error fetching Google Sheets data:", error);
       }
     },
+
     calculateEmployeesPerformance() {
       const employeeMap = new Map();
-    
-      this.sheetData.slice(1) // Assuming the first row contains headers
-        .filter(row => row.length > 0 && row[8] !== undefined) // Filter out empty rows or rows without employee numbers
-        .forEach(row => {
+
+      this.sheetData
+        .slice(1) // Assuming the first row contains headers
+        .filter((row) => row.length > 0 && row[8] !== undefined) // Filter out empty rows or rows without employee numbers
+        .forEach((row) => {
           const employeeNumber = row[8];
           if (!employeeMap.has(employeeNumber)) {
             const scores = [
@@ -33,37 +35,40 @@ export const useSheetsDataStore = defineStore('sheetsData', {
               parseFloat(row[10]),
               parseFloat(row[11]),
               parseFloat(row[12]),
-              row[13] === 'نعم' ? 10 : row[13] === 'لا' ? 0 : parseFloat(row[13]),
+              row[13] === "نعم"
+                ? 10
+                : row[13] === "لا"
+                ? 0
+                : parseFloat(row[13]),
               parseFloat(row[14]),
               parseFloat(row[15]),
               parseFloat(row[16]),
               row[17] ? -1 : 0,
-            ].filter(score => !isNaN(score));
-    
+            ].filter((score) => !isNaN(score));
+
             const totalScore = scores.reduce((acc, score) => acc + score, 0);
-            const averageScore = scores.length > 0 ? totalScore / scores.length : 0;
-    
+            const averageScore =
+              scores.length > 0 ? totalScore / scores.length : 0;
+
             employeeMap.set(employeeNumber, {
-              employeeInfo: row[6] || 'Info not available',
-              fullName: row[7] || 'Name not available',
+              employeeInfo: row[6] || "Info not available",
+              fullName: row[7] || "Name not available",
               employeeNumber: employeeNumber,
               totalAveragePerformance: averageScore.toFixed(2),
             });
           }
         });
-    
+
       this.employeesPerformance = Array.from(employeeMap.values());
-    }
-    
+    },
   },
   getters: {
-
     getUserData: (state) => (userId) => {
-      const userRow = state.sheetData.find(row => row[8]?.trim() === userId);
+      const userRow = state.sheetData.find((row) => row[8]?.trim() === userId);
       return userRow ? userRow[7] : null; // Return the full name or null if not found
     },
+
     totalAveragePerformance: (state) => {
-      // Updated column indices according to the new sheet order
       let total = 0;
       let entries = 0;
 
@@ -71,16 +76,8 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         let rowTotal = 0;
         let validEntries = 0;
 
-        // Loop through the new score columns, assuming they start from index 9 to 16
         for (let i = 9; i <= 16; i++) {
-          let value = row[i];
-
-          // Adjust for the new special case column for 'responseAbility' which is now at index 12
-          if (i === 12) {
-            value = parseFloat(value); // Assuming responseAbility is now a number
-          } else {
-            value = parseFloat(value);
-          }
+          let value = parseFloat(row[i]);
 
           if (!isNaN(value) && value >= 0 && value <= 10) {
             rowTotal += value;
@@ -98,15 +95,15 @@ export const useSheetsDataStore = defineStore('sheetsData', {
       let totalAverage = entries > 0 ? total / entries : 0;
       return Number(totalAverage.toFixed(2));
     },
+
     yesNoPercentages: (state) => {
-      // Adjusted for new column index for 'caseCompletion' which is now at index 13
       let yesCount = 0;
       let noCount = 0;
 
       state.sheetData.slice(1).forEach((row) => {
-        const answer = row[13]; // New index for 'caseCompletion'
-        if (answer === 'نعم') yesCount++;
-        else if (answer === 'لا') noCount++;
+        const answer = row[13]; // 'caseCompletion' column
+        if (answer === "نعم") yesCount++;
+        else if (answer === "لا") noCount++;
       });
 
       const total = yesCount + noCount;
@@ -115,11 +112,12 @@ export const useSheetsDataStore = defineStore('sheetsData', {
         total ? Math.round((noCount / total) * 100) : 0,
       ];
     },
+
     uniqueEmployeeCount: (state) => {
       const uniqueIds = new Set();
 
       state.sheetData.slice(1).forEach((row) => {
-        const employeeId = row[8]?.trim(); // New index for 'employeeNumber'
+        const employeeId = row[8]?.trim(); // 'employeeNumber' column
         if (employeeId) {
           uniqueIds.add(employeeId);
         }
@@ -127,7 +125,7 @@ export const useSheetsDataStore = defineStore('sheetsData', {
 
       return uniqueIds.size;
     },
-    
+
     evaluationsCount: (state) => {
       let count = 0;
 
@@ -157,8 +155,8 @@ export const useSheetsDataStore = defineStore('sheetsData', {
 
       return count;
     },
+
     averageColumnValues: (state) => {
-      // Adjusted column indices
       let sums = {
         communicationClarity: 0,
         effectiveListening: 0,
@@ -180,7 +178,6 @@ export const useSheetsDataStore = defineStore('sheetsData', {
 
       state.sheetData.slice(1).forEach((row) => {
         Object.keys(sums).forEach((key, index) => {
-          // Adjusted column indices for the new sheet order
           const columnIndex = [9, 10, 11, 12, 14, 15, 16][index];
           const value = parseFloat(row[columnIndex]);
           if (!isNaN(value)) {
@@ -192,36 +189,39 @@ export const useSheetsDataStore = defineStore('sheetsData', {
 
       let averages = {};
       Object.keys(sums).forEach((key) => {
-        averages[key] = counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A";
+        averages[key] =
+          counts[key] > 0 ? (sums[key] / counts[key]).toFixed(2) : "N/A";
       });
 
       return averages;
     },
- 
+
     bestEmployeeDetails: (state) => {
       const now = new Date();
-      const startOfWeek = now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1); // Adjust for week start (Sunday or Monday depending on your locale)
+      const startOfWeek =
+        now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1);
       const startOfThisWeek = new Date(now.setDate(startOfWeek));
       startOfThisWeek.setHours(0, 0, 0, 0);
-    
+
       const employeeScores = {};
       const employeeCounts = {};
-    
+
       state.sheetData.slice(1).forEach((row) => {
         const evaluationDate = new Date(row[5]);
         if (evaluationDate >= startOfThisWeek && evaluationDate <= new Date()) {
           const employeeName = row[7].trim();
           const scores = [
-            parseFloat(row[9]), // communicationClarity
-            parseFloat(row[10]), // effectiveListening
-            parseFloat(row[11]), // caseUnderstanding
-            parseFloat(row[12]), // responseAbility
-            parseFloat(row[14]), // interactionSpeed
-          ].filter(score => !isNaN(score));
-    
-          const feedback = row[17] ? -1 : 0; // Assuming feedback is always negative
-          const totalScore = scores.reduce((acc, curr) => acc + curr, 0) + feedback;
-    
+            parseFloat(row[9]),
+            parseFloat(row[10]),
+            parseFloat(row[11]),
+            parseFloat(row[12]),
+            parseFloat(row[14]),
+          ].filter((score) => !isNaN(score));
+
+          const feedback = row[17] ? -1 : 0;
+          const totalScore =
+            scores.reduce((acc, curr) => acc + curr, 0) + feedback;
+
           if (employeeScores.hasOwnProperty(employeeName)) {
             employeeScores[employeeName] += totalScore;
             employeeCounts[employeeName] += scores.length;
@@ -231,10 +231,10 @@ export const useSheetsDataStore = defineStore('sheetsData', {
           }
         }
       });
-    
-      let bestEmployeeName = '';
+
+      let bestEmployeeName = "";
       let bestScore = -Infinity;
-    
+
       Object.keys(employeeScores).forEach((employee) => {
         const avgScore = employeeScores[employee] / employeeCounts[employee];
         if (avgScore > bestScore) {
@@ -242,84 +242,87 @@ export const useSheetsDataStore = defineStore('sheetsData', {
           bestScore = avgScore;
         }
       });
-    
+
       return {
         name: bestEmployeeName || "No data",
         avgScore: bestScore !== -Infinity ? bestScore.toFixed(2) : "N/A",
       };
     },
 
+    bestEmployeeFirstCallResolution: (state) => {
+      const employeeResolutions = {};
+      const employeeCounts = {};
+
+      state.sheetData.slice(1).forEach((row) => {
+        if (row[13] === "نعم") {
+          // Assuming 'caseCompletion' column indicates first call resolution
+          const employeeName = row[7].trim();
+          const score = 1; // Increment count for each first call resolution
+
+          if (employeeResolutions.hasOwnProperty(employeeName)) {
+            employeeResolutions[employeeName] += score;
+            employeeCounts[employeeName]++;
+          } else {
+            employeeResolutions[employeeName] = score;
+            employeeCounts[employeeName] = 1;
+          }
+        }
+      });
+
+      let bestEmployeeName = "";
+      let bestScore = -Infinity;
+
+      Object.keys(employeeResolutions).forEach((employee) => {
+        const totalResolutions = employeeResolutions[employee];
+        if (totalResolutions > bestScore) {
+          bestEmployeeName = employee;
+          bestScore = totalResolutions;
+        }
+      });
+
+      return {
+        name: bestEmployeeName || "No data",
+        totalResolutions: bestScore !== -Infinity ? bestScore : "N/A",
+      };
+    },
+
     dailyEmployeePerformances: (state) => {
       try {
         const employeePerformances = {};
-    
-        console.log('sheetData:', state.sheetData); // Log the sheetData array
-    
-        state.sheetData.slice(1).forEach((row, index) => {
-          if (!row[6] || !row[5]) {
-            console.log(`Row ${index + 1} is missing data. Skipping this row.`);
-            return; // Skip this iteration if row[6] or row[5] is undefined
-          }
-    
-          const employeeName = row[6].trim(); // employeeInfo
-          const evaluationDate = new Date(row[5]).toDateString(); // Convert date to string for easy comparison
-    
-          console.log(`Row ${index + 1}: employeeName = ${employeeName}, evaluationDate = ${evaluationDate}`); // Log the employeeName and evaluationDate
-    
+
+        state.sheetData.slice(1).forEach((row) => {
+          if (!row[6] || !row[5]) return;
+
+          const employeeName = row[6].trim();
+          const evaluationDate = new Date(row[5]).toDateString();
+
           const scores = [
-            parseFloat(row[9]), // communicationClarity
-            parseFloat(row[10]), // effectiveListening
-            parseFloat(row[11]), // caseUnderstanding
-            parseFloat(row[12]), // responseAbility
-            parseFloat(row[13]) === 'نعم' ? 10 : parseFloat(row[13]) === 'لا' ? 0 : parseFloat(row[13]), // caseCompletion, assuming نعم = 10, لا = 0
-            parseFloat(row[14]), // interactionSpeed
-            parseFloat(row[15]), // knowledgeCommitment
-            parseFloat(row[16]), // productUnderstanding
-            row[17] ? -1 : 0, // feedback, assuming any feedback is negative
-          ].filter(score => !isNaN(score));
-    
-          console.log(`Row ${index + 1}: scores =`, scores); // Log the scores array
-    
+            parseFloat(row[9]),
+            parseFloat(row[10]),
+            parseFloat(row[11]),
+            parseFloat(row[12]),
+            row[13] === "نعم" ? 10 : row[13] === "لا" ? 0 : parseFloat(row[13]),
+            parseFloat(row[14]),
+            parseFloat(row[15]),
+            parseFloat(row[16]),
+            row[17] ? -1 : 0,
+          ].filter((score) => !isNaN(score));
+
           const totalScore = scores.reduce((acc, curr) => acc + curr, 0);
-          const averageScore = scores.length > 0 ? totalScore / scores.length : 0;
-    
+          const averageScore =
+            scores.length > 0 ? totalScore / scores.length : 0;
+
           if (!employeePerformances[employeeName]) {
             employeePerformances[employeeName] = {};
           }
-    
+
           employeePerformances[employeeName][evaluationDate] = averageScore;
         });
-    
-        console.log('employeePerformances:', employeePerformances); // Log the employeePerformances object
-    
+
         return employeePerformances;
       } catch (error) {
-        console.error('Error in dailyEmployeePerformances function:', error); // Log any errors that occur during the execution of the function
+        console.error("Error in dailyEmployeePerformances function:", error);
       }
     },
-
   },
 });
-
-
-
-// new order of the sheet:
-// serialNumber: row[0],
-// caseLink: row[1],
-// caseNumber: row[2],
-// contactType: row[3],
-// caseDate: row[4],
-// evaluationDate: row[5],
-// employeeInfo: row[6],
-// fullName: row[7],
-// employeeNumber: row[8],
-// communicationClarity: parseFloat(row[9]),
-// effectiveListening: parseFloat(row[10]),
-// caseUnderstanding: parseFloat(row[11]),
-// responseAbility: parseFloat(row[12]),
-// caseCompletion: row[13],
-// interactionSpeed: parseFloat(row[14]),
-// knowledgeCommitment: parseFloat(row[15]),
-// productUnderstanding: parseFloat(row[16]),
-// feedback: row[17],
-// correction: row[18],

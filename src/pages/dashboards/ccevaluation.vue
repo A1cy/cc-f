@@ -28,7 +28,9 @@ store.fetchSheetData() // Fetch data on component mount or when needed
 
 <template>
   <VRow class="match-height">
-    
+        <VCol cols="12">
+      <EcommerceCongratulationsJohn />
+      </VCol>
     
       <VCol cols="12" md="12">
       <EcommerceEarningReports />
@@ -54,9 +56,7 @@ store.fetchSheetData() // Fetch data on component mount or when needed
     </VCol>
 
     
-    <VCol cols="12">
-      <EcommerceCongratulationsJohn />
-      </VCol>
+
     <VCol cols="12">
       <TeamAvg />
       </VCol>
