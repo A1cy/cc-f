@@ -26,13 +26,13 @@ onMounted(async () => {
       <VCol cols="8">
         <VCardText>
           <h6 class="text-lg text-no-wrap font-weight-medium">
-            Congratulations {{ bestEmployeeDetails.value.name }}!! 🎉
+            Congratulations {{ bestEmployeeDetails.name }}!! 🎉
           </h6>
           <p class="mb-2">
             Best customer care employee of the week
           </p>
           <h4 class="text-h4 font-weight-medium text-primary mb-1">
-            Avg: {{ bestEmployeeDetails.value.avgScore }}/10
+            Avg: {{ bestEmployeeDetails.avgScore }}/10
           </h4>
           <VBtn>View Performance</VBtn>
         </VCardText>
@@ -51,13 +51,13 @@ onMounted(async () => {
       <VCol cols="8">
         <VCardText>
           <h6 class="text-lg text-no-wrap font-weight-medium">
-            Congratulations {{ bestFirstCallResolutionEmployee.value.name }}!! 🎉
+            Congratulations {{ bestFirstCallResolutionEmployee.name }}!! 🎉
           </h6>
           <p class="mb-2">
             Best employee for solving issues on the first call
           </p>
           <h4 class="text-h4 font-weight-medium text-primary mb-1">
-            Total Resolutions: {{ bestFirstCallResolutionEmployee.value.totalResolutions }}
+            Total Resolutions: {{ bestFirstCallResolutionEmployee.totalResolutions }}
           </h4>
         </VCardText>
       </VCol>
