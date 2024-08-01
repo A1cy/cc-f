@@ -25,35 +25,45 @@ export const useSheetsDataStore = defineStore("sheetsData", {
       const employeeMap = new Map();
 
       this.sheetData
-        .slice(1) // Assuming the first row contains headers
-        .filter((row) => row.length > 0 && row[8] !== undefined) // Filter out empty rows or rows without employee numbers
+        .slice(1) // Skip the header row
+        .filter((row) => row.length > 0 && row[8]?.trim()) // Filter out empty rows or rows without employee numbers
         .forEach((row) => {
-          const employeeNumber = row[8];
-          if (!employeeMap.has(employeeNumber)) {
-            const scores = [
-              parseFloat(row[9]),
-              parseFloat(row[10]),
-              parseFloat(row[11]),
-              parseFloat(row[12]),
-              row[13] === "نعم"
-                ? 10
-                : row[13] === "لا"
-                ? 0
-                : parseFloat(row[13]),
-              parseFloat(row[14]),
-              parseFloat(row[15]),
-              parseFloat(row[16]),
-              row[17] ? -1 : 0,
-            ].filter((score) => !isNaN(score));
+          const employeeNumber = row[8].trim();
+          const employeeName = row[7]?.trim();
 
-            const totalScore = scores.reduce((acc, score) => acc + score, 0);
-            const averageScore =
-              scores.length > 0 ? totalScore / scores.length : 0;
+          // Skip rows with incomplete or invalid data
+          if (!employeeName || !employeeNumber) return;
 
+          const scores = [
+            parseFloat(row[9]),
+            parseFloat(row[10]),
+            parseFloat(row[11]),
+            parseFloat(row[12]),
+            row[13] === "نعم" ? 10 : row[13] === "لا" ? 0 : parseFloat(row[13]),
+            parseFloat(row[14]),
+            parseFloat(row[15]),
+            parseFloat(row[16]),
+            row[17] ? -1 : 0,
+          ].filter((score) => !isNaN(score));
+
+          const totalScore = scores.reduce((acc, score) => acc + score, 0);
+          const averageScore =
+            scores.length > 0 ? totalScore / scores.length : 0;
+
+          if (employeeMap.has(employeeNumber)) {
+            const existingData = employeeMap.get(employeeNumber);
+            existingData.totalScore += totalScore;
+            existingData.totalEvaluations += scores.length;
+            existingData.totalAveragePerformance = (
+              existingData.totalScore / existingData.totalEvaluations
+            ).toFixed(2);
+          } else {
             employeeMap.set(employeeNumber, {
-              employeeInfo: row[6] || "Info not available",
-              fullName: row[7] || "Name not available",
+              employeeInfo: row[6]?.trim() || "Info not available",
+              fullName: employeeName,
               employeeNumber: employeeNumber,
+              totalScore: totalScore,
+              totalEvaluations: scores.length,
               totalAveragePerformance: averageScore.toFixed(2),
             });
           }
@@ -65,7 +75,7 @@ export const useSheetsDataStore = defineStore("sheetsData", {
   getters: {
     getUserData: (state) => (userId) => {
       const userRow = state.sheetData.find((row) => row[8]?.trim() === userId);
-      return userRow ? userRow[7] : null; // Return the full name or null if not found
+      return userRow ? userRow[7]?.trim() : null; // Return the full name or null if not found
     },
 
     totalAveragePerformance: (state) => {
@@ -198,18 +208,17 @@ export const useSheetsDataStore = defineStore("sheetsData", {
 
     bestEmployeeDetails: (state) => {
       const now = new Date();
-      const startOfWeek =
-        now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1);
-      const startOfThisWeek = new Date(now.setDate(startOfWeek));
-      startOfThisWeek.setHours(0, 0, 0, 0);
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // Start of the current month
 
       const employeeScores = {};
       const employeeCounts = {};
 
       state.sheetData.slice(1).forEach((row) => {
         const evaluationDate = new Date(row[5]);
-        if (evaluationDate >= startOfThisWeek && evaluationDate <= new Date()) {
-          const employeeName = row[7].trim();
+        if (evaluationDate >= startOfMonth && evaluationDate <= now) {
+          const employeeName = row[7]?.trim();
+          if (!employeeName) return; // Skip rows with missing employee names
+
           const scores = [
             parseFloat(row[9]),
             parseFloat(row[10]),
@@ -256,7 +265,9 @@ export const useSheetsDataStore = defineStore("sheetsData", {
       state.sheetData.slice(1).forEach((row) => {
         if (row[13] === "نعم") {
           // Assuming 'caseCompletion' column indicates first call resolution
-          const employeeName = row[7].trim();
+          const employeeName = row[7]?.trim();
+          if (!employeeName) return; // Skip rows with missing employee names
+
           const score = 1; // Increment count for each first call resolution
 
           if (employeeResolutions.hasOwnProperty(employeeName)) {
@@ -286,6 +297,45 @@ export const useSheetsDataStore = defineStore("sheetsData", {
       };
     },
 
+    mostAnsweringCallEmployee: (state) => {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // Start of the current month
+
+      const employeeCallCounts = {};
+
+      state.sheetData.slice(1).forEach((row) => {
+        const evaluationDate = new Date(row[5]);
+        if (evaluationDate >= startOfMonth && evaluationDate <= now) {
+          const employeeName = row[7]?.trim();
+          if (!employeeName) return; // Skip rows with missing employee names
+
+          const callCount = 1; // Increment by 1 for each row, assuming each row is a call
+
+          if (employeeCallCounts.hasOwnProperty(employeeName)) {
+            employeeCallCounts[employeeName] += callCount;
+          } else {
+            employeeCallCounts[employeeName] = callCount;
+          }
+        }
+      });
+
+      let mostAnsweringEmployee = "";
+      let maxCalls = -Infinity;
+
+      Object.keys(employeeCallCounts).forEach((employee) => {
+        const totalCalls = employeeCallCounts[employee];
+        if (totalCalls > maxCalls) {
+          mostAnsweringEmployee = employee;
+          maxCalls = totalCalls;
+        }
+      });
+
+      return {
+        name: mostAnsweringEmployee || "No data",
+        totalCalls: maxCalls !== -Infinity ? maxCalls : "N/A",
+      };
+    },
+
     dailyEmployeePerformances: (state) => {
       try {
         const employeePerformances = {};
@@ -293,7 +343,7 @@ export const useSheetsDataStore = defineStore("sheetsData", {
         state.sheetData.slice(1).forEach((row) => {
           if (!row[6] || !row[5]) return;
 
-          const employeeName = row[6].trim();
+          const employeeName = row[6]?.trim();
           const evaluationDate = new Date(row[5]).toDateString();
 
           const scores = [

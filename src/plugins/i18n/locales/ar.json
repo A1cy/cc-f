@@ -229,8 +229,27 @@
     },
     
 
-    
+   
 
 
-  }
+  },
+    "caseFirstTimeCompletionRate": "معدل إتمام الحالة من المرة الأولى",
+    "Support Tracker": "متتبع تقييم مركز الاتصال",
+    "Statistics": "الإحصائيات",
+    "Average Communication Clarity": "متوسط وضوح الاتصال",
+    "Average effective Listening": "متوسط الاستماع الفعال",
+    "Average case Understanding": "متوسط فهم الحالة",
+    "Average responseAbility": "متوسط الاستجابة",
+    "Average interaction Speed": "متوسط سرعة التفاعل",
+    "Average knowledge Commitment": "متوسط الالتزام بالمعرفة",
+    "Average product Understanding": "متوسط فهم المنتج",
+    "caseFirstTimeCompletionRate": "معدل إتمام الحالة من المرة الأولى",
+    "Employees": "موظفي مركز الاتصال",
+    "Evaluations": "التقييمات",
+    "mostAnsweringCallEmployee": "الموظف الأكثر استجابة للمكالمات لهذا الشهر",
+    "totalCalls": "إجمالي المكالمات",
+
+    "Congratulations": "تهانينا",
+    "Best employee for solving issues on the first call": "أفضل موظف لحل المشكلات في المكالمة الأولى"
+  
 }
